@@ -1,0 +1,48 @@
+.container {
+  background-size: cover;
+  background-position: center;
+  background-color: #bbb;
+  width: 47.5%;
+  height: 220px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  float: left;
+}
+
+.container:nth-child(2) {
+  margin-left: 5%;
+}
+
+.details {
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.address {
+  composes: muted from '../../App.css';
+  font-size: 13px;
+}
+
+.headline {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+@media (min-width: 900px) and (max-width: 1120px) {
+  .container {
+    width: 100%;
+  },
+  .container:nth-child(2) {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: 100%;
+  },
+  .container:nth-child(2) {
+    margin-left: 0;
+  }
+}

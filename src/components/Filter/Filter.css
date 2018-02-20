@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.searchBar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.searchIcon {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  margin-left: 9px;
+  margin-top: 2px;
+  z-index: 50;
+}
+
+.searchBar input {
+  padding: 10px 10px 10px 35px;
+  margin-bottom: 0;
+  border-radius: 4px;
+}
+
+.emptySearch {
+  margin-top: 100px;
+  text-align: center;
+}
+
+@media (min-width:640px) {
+  .searchBar {
+    width: 30%;
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,58 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+.header {
+  color: white;
+  composes: row;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e3e3e3;
+}
+
+.space {
+  margin-bottom: 15px;
+}
+
+.muted {
+  composes: muted from '../../App.css';
+  font-size: 14px;
+}
+.green {
+  composes: success from '../../App.css';
+  font-size: 19px;
+}
+
+.link {
+  composes: links from '../../App.css';
+  font-size: 13px;
+}
+
+.greyBtn {
+  font-size: 13px;
+  padding: 7px 15px;
+  border-radius: 4px;
+  background-color: #efefef;
+  color: #00a19a;
+  border-bottom: 1px solid lightgrey;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+.greyBtn:hover {
+  background-color: lightgrey;
+  color: #008781;
+}
+
+.body {
+  composes: row;
+  margin: 10px 0;
+}
+
+@media (min-width: 640px){
+  .header {
+    flex-direction: row;
+  }
+}

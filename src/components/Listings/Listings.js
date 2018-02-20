@@ -1,0 +1,98 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import LoadList from 'components/LoadList/LoadList.js';
+import Filter from 'components/Filter/Filter.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/CardHeader/CardHeader.js';
+import ListingItem from 'components/ListingItem/ListingItem.js';
+import BorderButton from 'components/BorderButton/BorderButton.js';
+import FilledButton from 'components/FilledButton/FilledButton.js';
+import Circle from 'components/Circle/Circle.js';
+
+import styles from './Listings.css';
+
+const Listings = ({property}) => (
+  <LoadList url={`/m/properties/${property}/listings`}>
+    {listings => {
+
+        if(listings.length > 0)
+        return(
+          <Filter
+            items={listings}
+            itemKeys={["unit"]}
+            placeholder="Find by unit number"
+            name="Listings"
+          >
+            {filteredListings => {
+              const activeListings = filteredListings.filter(listing =>
+                listing.active
+              );
+              const inactiveListings = filteredListings.filter(listing =>
+                !listing.active
+              );
+              return(
+                <div>
+                  {activeListings.length > 0 &&
+                    <div className={styles.space}>
+                      <Card>
+                        <CardHeader color="#55B475">
+                          <span className={styles.title}>Active Listings</span>
+                        </CardHeader>
+                        {activeListings.map(listing =>
+                          <ListingItem key={listing._id} listing={listing} location={"Unit "+listing.unit} />
+                        )}
+                      </Card>
+                    </div>
+                  }
+                  {inactiveListings.length > 0 &&
+                    <Card>
+                      <CardHeader color="#78909C">
+                        <span className={styles.title}>Inactive Listings</span>
+                      </CardHeader>
+                      {inactiveListings.map(listing =>
+                        <ListingItem key={listing._id} listing={listing} location={"Unit "+listing.unit} />
+                      )}
+                    </Card>
+                  }
+                  <Link to={{pathname: `/m/listings/new`, state: {propertyId: property}}} className={styles.createBtn}>
+                    <BorderButton
+                      width="150px"
+                      height="35px"
+                      font="13px"
+                    >
+                      Create a listing
+                    </BorderButton>
+                  </Link>
+                </div>
+              )
+            }}
+          </Filter>
+        )
+
+        else
+        return(
+          <div className={styles.center}>
+            <Circle>
+              <svg height="45" width="45" viewBox="0 0 24 24">
+                <path fill="#FFA300" d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"></path>
+              </svg>
+            </Circle>
+            <h1>Find qualified tenants</h1>
+            <p>Create listings for applicants to see.</p>
+            <Link className={styles.addBtn} to={{pathname:`/m/listings/new`, state: { propertyId: property }}}>
+              <FilledButton
+                width="100%"
+                height="48px"
+                font="14px"
+              >
+                Create a listing
+              </FilledButton>
+            </Link>
+          </div>
+        )
+    }}
+  </LoadList>
+)
+
+export default Listings;

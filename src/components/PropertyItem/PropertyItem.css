@@ -1,0 +1,104 @@
+
+.card {
+  box-shadow: 0 1px 1px #d3d3d3;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  width: 100%;
+  float: left;
+  position: relative;
+  margin-bottom: 15px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+.card:nth-child(2) {
+  margin-left: 0;
+}
+.card:hover {
+  box-shadow: 0 3px 10px #d3d3d3;
+}
+
+.card:hover .address {
+  color: #00a19a;
+}
+
+.menuBtn {
+  height: 33px;
+  width: 48px;
+  line-height: 19px;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bolder;
+  font-size: 24px;
+  background-color: #efefef;
+  border-bottom: 1px solid #d3d3d3;
+  border-radius: 4px;
+  color: #00a19a;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.menuBtn:hover {
+  background-color: #d3d3d3;
+}
+
+.right {
+  position: absolute;
+  right: 5px;;
+  top: 5px;
+}
+
+.position {
+  top: 100%;
+  right: 0;
+}
+
+.dropdown {
+  background-color: #fff;
+  text-align: left;
+}
+
+.link {
+  composes: links from '../../App.css';
+  padding: 7px 65px 7px 14px;
+  background-color: #fff;
+  font-size: 12.5px;
+  font-weight: 300;
+  transition: background-color 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.link:hover {
+  background-color: #f7f7f7;
+}
+
+.banner {
+  padding: 15px;
+}
+
+.address {
+  color: #3d4542;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+.city {
+  color: #747f7b;
+  font-size: 12px;
+  margin: 3px 0;
+}
+@media (min-width: 900px) {
+  .card {
+    width: 32.1%;
+  },
+  .card:not(:nth-child(3n+1)) {
+    margin-left: 1.5%;
+  }
+}
+@media (min-width: 640px) and (max-width: 900px) {
+  .card {
+    width: 49%;
+  },
+  .card:nth-child(2) {
+    margin-left: 1.5%;
+  }
+}

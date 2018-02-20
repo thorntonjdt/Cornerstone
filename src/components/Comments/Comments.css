@@ -1,0 +1,24 @@
+.link {
+  composes: links from '../../App.css';
+  font-size: 15px;
+  padding: 15px;
+}
+
+.noComments {
+  padding: 15px;
+  text-align: center;
+}
+
+.commentBar {
+  display: flex;
+  align-items: center;
+}
+
+.add {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.commentBar > input {
+  margin: 0 -90px 0 0;
+}

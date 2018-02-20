@@ -1,0 +1,38 @@
+.transaction {
+  padding: 20px 5px;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction h4 {
+  font-size: 12px
+}
+
+.transaction > span {
+  flex: 1;
+  padding: 0 5px;
+}
+
+.green {
+  composes: success from '../../App.css';
+}
+
+.yellow {
+  color: #ecdc00;
+}
+
+.date {
+  font-size: 13px;
+}
+
+@media (min-width: 640px){
+  .transaction{
+    padding: 20px 15px;
+    font-size: 16px;
+  },
+  .transaction > h4 {
+    font-size: 15px;
+  }
+}

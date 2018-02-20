@@ -1,0 +1,20 @@
+.form {
+  margin: 15px 0;
+}
+.form input {
+  margin-top: 3px;
+  margin-bottom: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  font-size: 12px;
+  background-color: #FDD5CE;
+  padding: 5px;
+  border-radius: 4px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}

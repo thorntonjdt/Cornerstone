@@ -1,0 +1,5 @@
+.cancelBtn {
+  composes: links from '../../App.css';
+  font-size: 15px;
+  margin-left: 25px;
+}

@@ -1,0 +1,65 @@
+.back {
+  composes: links from '../../../App.css';
+  font-size: 12px;
+}
+
+.address {
+  composes: faded from '../../../App.css';
+  font-size: 12px;
+  text-transform:uppercase;
+  margin-bottom: 15px;
+}
+
+.submission {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 3px;
+  background-color: #F7F7F7;
+  padding: 15px;
+  margin: 15px 15px 0 15px;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.padding {
+  padding: 15px;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  color: #78909c;
+  border-radius: 50%;
+  border: 2px solid #78909c;
+  line-height: 100px;
+  text-align: center;
+  font-size: 32px;
+}
+.collectBtn {
+  margin-top: 20px;
+}
+.profile {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
+}
+
+@media (min-width: 640px){
+  .submission {
+    flex-direction: row;
+  },
+  .profile {
+    margin: 0 auto;
+    width: 58%;
+  },
+  .collectBtn {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,128 @@
+.header {
+  background-color: #3d4542;
+  position: absolute;
+  justify-content: flex-end;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: 70px;
+}
+
+.navlinks {
+  text-transform: capitalize;
+  color: #fff;
+  height: 100%;
+  display: none;
+}
+
+.navlinks a {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 10px;
+}
+
+.navlinks a:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.navlinks a:hover {
+  border-bottom: 3px solid #fff;
+  background-color: #313735;
+}
+
+.activeNav {
+  border-bottom: 3px solid #fff;
+}
+
+.icon {
+  position: relative;
+  z-index: 3000;
+}
+.menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0px;
+  margin-left: -325px;
+  width: 325px;
+  background-color: #eeeee7;
+  transition: all 0.3s cubic-bezier(0, .52, 0, 1);
+  z-index: 2000;
+}
+
+.links {
+  margin-top: 30px;
+  margin-left: 30px;
+  color: #3d4542;
+}
+
+.link a {
+  display: flex;
+  align-items: center;
+}
+
+.link svg {
+  fill: #3d4542;
+  transition: fill 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+.link {
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  transition: color 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.link:hover {
+  color: #00a19a;
+}
+
+.link:hover svg {
+  fill: #00a19a;
+}
+
+.active {
+  color: #00a19a;
+}
+
+.active svg {
+  fill: #00a19a;
+}
+
+.show {
+  margin-left: 0;
+}
+
+
+.menuAccount div {
+  margin: 10px 0;
+  font-size: 13px;
+  transition: color 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.menuAccount div:hover {
+  color: #00a19a;
+}
+
+.menuAccount h4 {
+  margin-top: 15px;
+}
+@media (min-width:900px) {
+  .menu {
+    display: none;
+  },
+  .icon,.menuAccount {
+    display: none;
+  },
+  .navlinks {
+    display: inline-block;
+  },
+  .header {
+    justify-content: flex-start;
+  }
+}

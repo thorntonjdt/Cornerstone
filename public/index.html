@@ -1,0 +1,58 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My App</title><meta name="theme-color" content="#2196f3"><link rel="manifest" href="/manifest.json"><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><style>body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #484848;
+      background-color: #FCFCFC;
+    }
+
+    .main {
+      height: 18vw;
+      width: 18vw;
+      font-size: 11px;
+    }
+
+    .logo {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10000;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: #00a19a;
+      color: #fff;
+      transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .adjust {
+      height: 55px;
+      width: 55px;
+      font-size: 10px;
+    }
+
+    .logoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 900px){
+      .adjust {
+        width: 70px;
+        height: 70px;
+        font-size: 11px;
+      }
+    }
+    @media (min-width: 640px){
+      .main {
+        font-size: 15px;
+        height: 115px;
+        width: 115px
+      }
+    }</style></head><body><div id="root"><div class="logoContainer"><div class="logo main">CORNER STONE</div></div></div><script>!function(e){function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}var r=window.webpackJsonp;window.webpackJsonp=function(t,a,c){for(var d,f,u,i=0,s=[];i<t.length;i++)f=t[i],o[f]&&s.push(o[f][0]),o[f]=0;for(d in a)Object.prototype.hasOwnProperty.call(a,d)&&(e[d]=a[d]);for(r&&r(t,a,c);s.length;)s.shift()();if(c)for(i=0;i<c.length;i++)u=n(n.s=c[i]);return u};var t={},o={20:0};n.e=function(e){function r(){d.onerror=d.onload=null,clearTimeout(f);var n=o[e];0!==n&&(n&&n[1](new Error("Loading chunk "+e+" failed.")),o[e]=void 0)}var t=o[e];if(0===t)return new Promise(function(e){e()});if(t)return t[2];var a=new Promise(function(n,r){t=o[e]=[n,r]});t[2]=a;var c=document.getElementsByTagName("head")[0],d=document.createElement("script");d.type="text/javascript",d.charset="utf-8",d.async=!0,d.timeout=12e4,n.nc&&d.setAttribute("nonce",n.nc),d.src=n.p+""+({}[e]||e)+"."+{0:"62a26e2783e1d2f5495b",3:"68668d81028a46064df9",4:"2664f344210919993294",5:"30183a04608703eba8ea",6:"aeccaa784ae22153af12",7:"1541273eb4dd4c047de6",8:"c84e62f4e1fbd615078b",9:"e12f70aa63d5041c9f3d",10:"d8a89db93f6ac3d57b14",11:"44ed8cec8800455152d6",12:"a2c3e38580427e9060a0",13:"8d1ed2ce0a0af4a55c39",14:"8085d65a168599a4d004",15:"b9c6b977208e585e2d0c",16:"ba9fd9b8146c08dd1ed2",17:"4212f9b3554180ea0536",18:"790b253773e0f69da3f0",19:"5bb783b4247c70b7a161"}[e]+".chunk.js";var f=setTimeout(r,12e4);return d.onerror=d.onload=r,c.appendChild(d),a},n.m=e,n.c=t,n.d=function(e,r,t){n.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:t})},n.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(r,"a",r),r},n.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},n.p="/scripts/",n.oe=function(e){throw console.error(e),e}}([]);</script><script defer src="/scripts/vendor.165fe6721addf09f2ff7.js"></script><script defer src="/scripts/bundle.79ae6ed5ef7ee655b04e.js"></script></body><link href="/scripts/styles.79ae6e.css" rel="stylesheet"></html>

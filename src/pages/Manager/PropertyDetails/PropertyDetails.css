@@ -1,0 +1,48 @@
+.back {
+  composes: links from "../../../App.css";
+  font-size: 13px;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.address {
+  composes: muted from "../../../App.css";
+  font-size: 13px;
+}
+
+.edit {
+  composes: links from "../../../App.css";
+  font-size: 12.5px;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 35px;
+}
+
+.createBtn {
+  width: 200px;
+  margin-top: 15px;
+}
+.header {
+  padding: 10px 0 0 15px;
+}
+.propertyInfo {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+}
+
+.details {
+  margin-left: 10px;
+}
+
+
+@media (min-width: 640px){
+  .createBtn {
+    width: 32%;
+  }
+}

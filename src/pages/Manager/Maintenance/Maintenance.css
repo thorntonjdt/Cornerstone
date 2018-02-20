@@ -1,0 +1,15 @@
+.noTickets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  text-align: center;
+  padding: 15px;
+}
+
+.title {
+  color: white;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform:uppercase;
+}

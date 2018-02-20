@@ -1,0 +1,45 @@
+.image {
+  background-size: cover;
+  background-position: center;
+  height: 170px;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  height: 170px;
+}
+.banner {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  color: #00a19a;
+}
+
+.banner input {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  composes: links from '../../App.css';
+}
+
+.muted {
+  composes: muted from '../../App.css';
+  font-size: 12px;
+}

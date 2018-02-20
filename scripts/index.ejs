@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <meta name="theme-color" content="#2196f3">
+    <link rel="manifest" href="/manifest.json">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #484848;
+      background-color: #FCFCFC;
+    }
+
+    .main {
+      height: 18vw;
+      width: 18vw;
+      font-size: 11px;
+    }
+
+    .logo {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10000;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: #00a19a;
+      color: #fff;
+      transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .adjust {
+      height: 55px;
+      width: 55px;
+      font-size: 10px;
+    }
+
+    .logoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 900px){
+      .adjust {
+        width: 70px;
+        height: 70px;
+        font-size: 11px;
+      }
+    }
+    @media (min-width: 640px){
+      .main {
+        font-size: 15px;
+        height: 115px;
+        width: 115px
+      }
+    }
+
+    </style>
+  </head>
+  <body>
+  <div id='root'>
+    <div class='logoContainer'>
+      <div class='logo main'>
+        CORNER STONE
+      </div>
+    </div>
+  </div>
+  <%= htmlWebpackPlugin.files.webpackManifest %>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+  		<script defer src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+  	<% } %>
+  </body>
+  <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+  <% } %>
+</html>

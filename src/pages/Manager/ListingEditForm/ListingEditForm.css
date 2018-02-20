@@ -1,0 +1,27 @@
+.photoContainer,.editContainer {
+  box-sizing: border-box;
+  float: right;
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.activeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 17px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  color: #4e5854;
+}
+@media (min-width: 640px) {
+  .photoContainer {
+    width: 40%;
+    margin-top: 20px;
+  },
+  .editContainer {
+    margin-top: 20px;
+    width: 60%;
+  }
+}

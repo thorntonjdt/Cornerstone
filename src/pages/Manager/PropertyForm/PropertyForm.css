@@ -1,0 +1,44 @@
+.photoContainer,.formContainer {
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.row span {
+  flex: 0 0 30%;
+}
+
+.error {
+  font-size: 12px;
+  background-color: #FDD5CE;
+  padding: 5px;
+  border-radius: 4px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 640px) {
+  .photoContainer {
+    width: 40%;
+    margin-top: 20px;
+  },
+  .formContainer {
+    margin-top: 20px;
+    width: 60%;
+    padding-left: 70px;
+  }
+}

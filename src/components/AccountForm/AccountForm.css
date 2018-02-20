@@ -1,0 +1,51 @@
+.tile {
+  padding: 25px 0;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+.row > div,.half {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.cancel {
+  composes: links from '../../App.css';
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.link {
+  composes: links from '../../App.css';
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.muted {
+  composes: muted from '../../App.css';
+}
+
+@media (min-width: 640px){
+  .row {
+    flex-direction: row;
+  },
+  .row > div,.half {
+    width: 47.5%;
+  },
+  .row > div:last-child {
+    margin-left: 5%;
+  }
+}

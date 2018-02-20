@@ -1,0 +1,82 @@
+.tile {
+  margin: 15px 0;
+}
+
+.detailsContainer,.secondaryContainer {
+  float: left;
+  padding: 20px 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.detailsContainer {
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.secondaryContainer h5 {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.labels {
+  padding: 10px 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.labels p {
+  font-size: 13px;
+  flex: 1;
+  padding: 0 5px;
+}
+
+.transactions > div:not(:last-of-type) {
+  border-bottom: 1px solid lightgrey;
+}
+
+.green {
+  composes: success from '../../App.css';
+  font-size: 26px;
+  margin: 15px 0;
+}
+
+.buttons {
+  height: 30px;
+}
+
+.buttons > span {
+  margin-right: 10px;
+}
+
+.greyBtn {
+  font-size: 13px;
+  padding: 7px 15px;
+  border-radius: 4px;
+  background-color: #efefef;
+  color: #00a19a;
+  border-bottom: 1px solid lightgrey;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+.greyBtn:hover {
+  background-color: lightgrey;
+  color: #008781;
+}
+
+@media (min-width: 640px){
+  .detailsContainer {
+    width: 65%;
+    border-bottom: none;
+    border-right: 1px solid #d3d3d3;
+  },
+  .secondaryContainer {
+    width: 35%;
+  },
+  .labels p {
+    font-size: 17px;
+  },
+  .labels {
+    padding: 10px 15px;
+  }
+}

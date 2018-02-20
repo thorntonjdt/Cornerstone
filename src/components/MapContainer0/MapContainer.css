@@ -1,0 +1,12 @@
+.rent {
+  text-align: center;
+  composes: success from '../../App.css';
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.link {
+  composes: links from "../../App.css";
+  text-align: center;
+  padding: 5px 0;
+}

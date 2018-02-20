@@ -1,0 +1,10 @@
+.border {
+  border-radius: 50%;
+  border: 3px solid #efF1F3;
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}

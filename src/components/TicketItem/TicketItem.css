@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  justify-content: space-between;
+}
+
+.days {
+  font-size: 13px;
+  text-align: center;
+}
+
+.container:hover > p {
+  color: #00a19a;
+}

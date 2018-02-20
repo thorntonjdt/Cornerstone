@@ -1,0 +1,10 @@
+
+.text {
+  color: #00a19a;
+  animation: fadein 1.4s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

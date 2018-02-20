@@ -1,0 +1,74 @@
+.back {
+  composes: links from "../../../App.css";
+  font-size: 13px;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.padding {
+  padding: 15px;
+}
+
+.descriptionContainer, .leaseContainer {
+  width: 100%;
+  float: right;
+  composes: padding;
+  box-sizing: border-box;
+}
+
+.description {
+  composes: padding;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.description > p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.comments {
+  composes: padding;
+}
+
+.tenant {
+  margin-left: 7px;
+  font-size: 13px;
+  composes: links from '../../../App.css';
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  color: #78909c;
+  border-radius: 50%;
+  border: 2px solid #78909c;
+  line-height: 40px;
+  text-align: center;
+  font-size: 22px;
+  margin: 0 auto;
+}
+
+.lease {
+  border-radius: 3px;
+  background-color: #F7F7F7;
+  composes: padding;
+}
+
+.row {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.row > h5 {
+  display: inline-block;
+}
+
+@media (min-width: 640px){
+  .descriptionContainer {
+    width: 55%;
+  },
+  .leaseContainer {
+    width: 45%
+  }
+}

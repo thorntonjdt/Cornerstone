@@ -1,0 +1,33 @@
+.noTickets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  text-align: center;
+  padding: 15px;
+}
+
+.title {
+  color: white;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform:uppercase;
+}
+
+.padding {
+  padding: 10px 15px;
+}
+
+.createBtn {
+  margin-top: 15px;
+  width: 200px;
+}
+
+@media (min-width: 900px){
+  .padding {
+    padding: 10px 70px;
+  },
+  .createBtn {
+    width: 32%;
+  }
+}

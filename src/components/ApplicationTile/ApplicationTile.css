@@ -1,0 +1,10 @@
+.container {
+  text-align: center;
+}
+
+.container p {
+  margin-bottom: 10px;
+}
+.link {
+  composes: links from "../../App.css";
+}

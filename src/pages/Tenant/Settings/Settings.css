@@ -1,0 +1,15 @@
+.header {
+  padding: 30px 15px;
+}
+
+.content {
+  padding: 0 15px;
+  width: 100%;
+}
+
+
+@media (min-width: 640px){
+  .content {
+    width: 48%;
+  }
+}

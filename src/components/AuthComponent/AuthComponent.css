@@ -1,0 +1,55 @@
+.align {
+  display: flex;
+  align-items: center;
+  z-index: 2000;
+  height: 100%;
+}
+
+.margin {
+  margin-right: 30px;
+}
+
+.buttons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 25px;
+  z-index: 2500;
+}
+
+.buttons span:hover {
+  border-bottom: 2px solid #615e5e;
+}
+
+.buttons span {
+  display: inline-block;
+  cursor: pointer;
+  color: #615e5e;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 10px;
+  line-height: 55px;
+  height: 55px;
+  margin-left: 10px;
+}
+
+.buttons span:first-child {
+  display: none;
+}
+
+@media (min-width: 900px){
+  .buttons span {
+    margin-left: 30px;
+    height: 70px;
+    line-height: 70px;
+  },
+  .margin {
+    margin-right: 0;
+  },
+  .link {
+    padding: 0 20px;
+  },
+  .buttons span:first-child {
+    display: inline-block;
+  }
+}

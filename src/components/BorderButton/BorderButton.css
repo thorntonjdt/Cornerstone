@@ -1,0 +1,15 @@
+.container {
+  color: #00a19a;
+  border: 1px solid #00a19a;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.container:hover {
+  color: #006e69;
+  border: 1px solid #006e69;
+}

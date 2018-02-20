@@ -1,0 +1,47 @@
+.photoContainer,.formContainer {
+  box-sizing: border-box;
+  float: right;
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.activeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  font-size: 17px;
+  color: #4e5854;
+}
+
+.error {
+  font-size: 12px;
+  background-color: #FDD5CE;
+  padding: 5px;
+  border-radius: 4px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.errors {
+  font-size: 11px;
+  color: #e75b52;
+}
+
+.description {
+  margin-bottom: 10px;
+}
+
+
+@media (min-width: 640px) {
+  .photoContainer {
+    width: 40%;
+    margin-top: 20px;
+  },
+  .formContainer {
+    margin-top: 20px;
+    width: 60%;
+  }
+}

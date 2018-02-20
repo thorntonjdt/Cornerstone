@@ -1,0 +1,23 @@
+.tab {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.active {
+  color: #00a19a !important;
+  border-bottom: 3px solid #00a19a;
+}
+
+.link {
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #747f7b;
+  padding-bottom: 8px;
+  transition: color 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.link:hover {
+  color: #008781;
+}

@@ -1,0 +1,23 @@
+.pagePadding {
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+.header {
+  composes: pagePadding;
+  padding-top: 20px;
+  padding-bottom: 25px;
+  background-color: #fff;
+}
+
+.nav {
+  composes: muted from '../../../App.css';
+  padding-bottom: 20px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.link {
+  composes: links from '../../../App.css';
+}

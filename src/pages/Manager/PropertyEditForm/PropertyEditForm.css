@@ -1,0 +1,77 @@
+.photoContainer,.editContainer {
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.row span {
+  flex: 0 0 30%;
+}
+
+.submitBtn {
+  display: inline-block;
+  margin: 5px 20px 30px 0;
+}
+
+.delete {
+  float: right;
+  font-size: 14px;
+  padding: 7px 15px;
+  border-radius: 4px;
+  background-color: #efefef;
+  color: #E2482D;
+  margin-top: 30px;
+  border-bottom: 1px solid lightgrey;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+}
+.delete:hover {
+  background-color: lightgrey;
+}
+
+.edit {
+  composes: links from "../../../App.css";
+  display: inline-block;
+  font-size: 14px;
+  margin: 5px 0 25px 0;
+}
+
+.borderedRow {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.active {
+  composes: success from '../../../App.css';
+}
+
+.inactive {
+  composes: muted from '../../../App.css';
+}
+
+.link {
+  composes: links from '../../../App.css';
+}
+
+@media (min-width: 640px) {
+  .photoContainer {
+    width: 40%;
+    margin-top: 20px;
+  },
+  .editContainer {
+    margin-top: 20px;
+    width: 60%;
+    padding-left: 70px;
+  }
+}

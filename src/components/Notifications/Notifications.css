@@ -1,0 +1,109 @@
+.notifications {
+  position: relative;
+  color: #AAB1AE;
+  font-size: 14px;
+  top: 1px;
+}
+
+.notificationPosition {
+  top: 100%;
+  right: 0;
+}
+
+.notificationsDropdown {
+  position: absolute;
+  background-color: #fff;
+  width: 100vw;
+  left: calc(-100vw + 46px);
+  height: calc(100vh - 55px);
+  z-index: -10;
+  overflow: auto;
+}
+
+.margin {
+  margin-left: -30px;
+}
+
+.notificationsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #F9FAF7;
+  border-bottom: 1px solid #d3d3d3;
+  padding: 20px 10px;
+}
+
+.background:hover {
+  background-color: #313735;
+  border-bottom: 2px solid #fff;
+}
+
+.border:hover {
+  border-bottom: 2px solid #AAB1AE;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 0 20px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.center {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center svg {
+  margin-left: 15px;
+}
+
+.center div {
+  color: #747f7b;
+  text-align: center;
+}
+
+.alert {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: #da370a;
+  border: 1.5px solid;
+  top: 2px;
+  right: -1px;
+  position: absolute;
+  z-index: 500;
+}
+
+.white {
+  border-color: #FCFCFC;
+}
+
+.black {
+  border-color: #3d4542;
+}
+
+@media (min-width:900px) {
+  .notifications {
+    margin-left: 0;
+  }
+}
+
+@media (min-width:410px) {
+  .notificationsDropdown {
+    width: 420px;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 430px;
+  },
+  .margin {
+    margin-left: 0;
+  }
+}

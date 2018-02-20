@@ -1,0 +1,25 @@
+.container {
+  padding: 10px;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.clicky {
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px
+}
+
+.faded {
+  composes: muted from '../../App.css';
+  font-size: 14px;
+}
+
+.link {
+  composes: links from '../../App.css';
+  font-size: 13px;
+}

@@ -1,0 +1,22 @@
+
+.form {
+  margin: 15px 0;
+}
+.form input,select {
+  margin-top: 3px;
+}
+
+.split {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  font-size: 11px;
+  color: #e75b52;
+  margin-bottom: 5px;
+}
