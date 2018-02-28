@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import APIManager from 'utils/APIManager.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import Input from 'components/Input/Input.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import ImageUploader from 'components/ImageUploader/ImageUploader.js';
-import Toggle from 'components/Toggle/Toggle.js';
+import { createRequest, uploadImage } from 'utils/APIManager';
+import Subheader from 'components/Subheader/Subheader';
+import Input from 'components/Input/Input';
+import BorderButton from 'components/BorderButton/BorderButton';
+import FilledButton from 'components/FilledButton/FilledButton';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
+import Toggle from 'components/Toggle/Toggle';
 
 import styles from './ListingForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -53,10 +53,11 @@ class ListingForm extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     const errors = this.validateFields();
+    console.log(errors);
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
       let { available, bedrooms, bathrooms, rent, deposit, unit, headline, description, file, isActive } = this.state;
-      let body = JSON.stringify({
+      let body = {
         bedrooms: bedrooms,
         bathrooms: bathrooms,
         rent: rent,
@@ -66,14 +67,15 @@ class ListingForm extends React.Component {
         description: description,
         available: available,
         active: isActive
-      });
-      APIManager.create(`/m/managers/${this.props.manager}/properties/${this.props.location.state.propertyId}/listings`, body, (err, response) => {
+      };
+
+      createRequest(`/m/managers/${this.props.manager}/properties/${this.props.location.state.propertyId}/listings`, body, (err, response) => {
         if(err){
-          console.log(err);
+          this.setState({errors: {form: "Unexpected error. Please try again."}})
           return;
         }
         if(file){
-          APIManager.uploadImage(`/m/listings/${response}/picture`, file, (error) => {
+          uploadImage(`/m/listings/${response}/picture`, file, (error) => {
             if(error){
               console.log(error);
               return;
@@ -101,11 +103,11 @@ class ListingForm extends React.Component {
     const errors = {};
     errors.headline = !headline ? true : false;
     errors.description = !description ? true : false;
-    errors.unit = !unit || unit <= 0 ? true : false;
-    errors.bedrooms = !bedrooms || bedrooms <= 0 ? true : false;
-    errors.bathrooms = !bathrooms || bathrooms <= 0 ? true : false;
-    errors.rent = !rent || rent <= 0 ? true : false;
-    errors.form = !file ? "A cover image is required" : false;
+    errors.unit = !unit || isNaN(unit) || unit <= 0 ? true : false;
+    errors.bedrooms = !bedrooms || isNaN(bedrooms) || bedrooms <= 0 ? true : false;
+    errors.bathrooms = !bathrooms || isNaN(bathrooms) || bathrooms <= 0 ? true : false;
+    errors.rent = !rent || isNaN(rent) || rent <= 0 ? true : false;
+    //errors.form = !file ? "A cover image is required" : false;
     return errors;
   }
   render(){
@@ -136,17 +138,17 @@ class ListingForm extends React.Component {
         <div className={styles.formContainer}>
           <div className={styles.activeToggle}><span>Active:</span><Toggle isToggled={isActive} handleToggle={this.handleToggle} /></div>
           <form onSubmit={this.handleSubmit}>
-            <Input name="headline" label="headline" value={headline} hasError={errors["headline"]} onChange={this.handleInputChange} />
+            <Input name="headline" label="headline" value={headline} hasError={errors.headline} onChange={this.handleInputChange} />
             <div className={styles.description}>
               <label for="description">DESCRIPTION</label>
-              <textarea style={errors["description"] ? {borderColor: '#e75b52'} : {}} rows="4" name='description' type='text' value={description} onChange={this.handleInputChange} />
-              {errors["description"] && <div className={styles.errors}>This field is required</div>}
+              <textarea style={errors.description ? {borderColor: '#e75b52'} : {}} rows="4" name='description' type='text' value={description} onChange={this.handleInputChange} />
+              {errors.description && <div className={styles.errors}>This field is required</div>}
             </div>
-            <Input name="unit" label="unit #" value={unit} hasError={errors["unit"]} onChange={this.handleInputChange} />
-            <Input name="bedrooms" label="bedrooms" value={bedrooms} hasError={errors["bedrooms"]} onChange={this.handleInputChange} />
-            <Input name="bathrooms" label="bathrooms" value={bathrooms} hasError={errors["bathrooms"]} onChange={this.handleInputChange} />
-            <Input name="rent" label="rent" value={rent} hasError={errors["rent"]} onChange={this.handleInputChange} />
-            <Input name="deposit" label="deposit" value={deposit} hasError={errors["deposit"]} onChange={this.handleInputChange} />
+            <Input name="unit" label="unit #" value={unit} hasError={errors.unit} onChange={this.handleInputChange} />
+            <Input name="bedrooms" label="bedrooms" value={bedrooms} hasError={errors.bedrooms} onChange={this.handleInputChange} />
+            <Input name="bathrooms" label="bathrooms" value={bathrooms} hasError={errors.bathrooms} onChange={this.handleInputChange} />
+            <Input name="rent" label="rent" value={rent} hasError={errors.rent} onChange={this.handleInputChange} />
+            <Input name="deposit" label="deposit" value={deposit} hasError={errors.deposit} onChange={this.handleInputChange} />
             <div style={{marginBottom: 10}}>
               <label>AVAILABLE</label>
               <DatePicker
@@ -156,7 +158,7 @@ class ListingForm extends React.Component {
               />
             </div>
             <button style={{display: 'none'}} type="submit" />
-            {errors["form"] && <div className={styles.error}>{errors["form"]}</div>}
+            {errors.form && <div className={styles.error}>{errors.form}</div>}
             <FilledButton
               height="35px"
               width="100%"

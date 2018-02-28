@@ -5,23 +5,31 @@ import styles from './Dropdown.css';
 class Dropdown extends React.Component {
   constructor() {
     super();
-
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
     this.state = {
       popupVisible: false
     };
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   handleOpen() {
+    document.addEventListener('click', this.handleOutsideClick, false);
     this.setState({popupVisible: true});
   }
 
-  handleClose() {
-    this.setState({popupVisible: false})
+  handleClose(e) {
+    e.stopPropagation();
+    document.removeEventListener('click', this.handleOutsideClick, false);
+    this.setState({popupVisible: false});
   }
+  handleOutsideClick(e) {
+    if (this.node.contains(e.target)) {
+      return;
+    }
 
+    this.handleClose(e);
+  }
   render() {
     let { popupVisible } = this.state;
     let { button, children, positioning } = this.props;
@@ -30,7 +38,7 @@ class Dropdown extends React.Component {
       className += ` ${styles.open}`
     }
     return (
-      <span className={this.props.hoverStyle} onMouseEnter={this.handleOpen} onMouseLeave={this.handleClose}>
+      <span className={this.props.hoverStyle} onClick={this.handleOpen} onMouseEnter={this.handleOpen} onMouseLeave={this.handleClose}  ref={node => {this.node = node; }}>
         {button}
         <div onClick={this.handleClose} className={className}>
           {children}

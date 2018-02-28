@@ -1,9 +1,9 @@
 import React from 'react';
 
-import APIManager from 'utils/APIManager.js';
-import Input from 'components/Input/Input.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest, updateRequest } from 'utils/APIManager';
+import Input from 'components/Input/Input';
+import FilledButton from 'components/FilledButton/FilledButton';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './InfoForm.css';
 
@@ -21,7 +21,7 @@ class InfoForm extends React.Component {
     this.updateInfo = this.updateInfo.bind(this);
   }
   componentDidMount(){
-    APIManager.get(`/${this.props.app}/users/${this.props.user}/info`, (err, response) => {
+    getRequest(`/${this.props.app}/users/${this.props.user}/info`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -45,12 +45,12 @@ class InfoForm extends React.Component {
     errors.last_name = !last_name ? true : false;
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
-      let body = JSON.stringify({
+      let body = {
         first_name: first_name,
         last_name: last_name,
         phone: phone
-      })
-      APIManager.update(`/${this.props.app}/users/${this.props.user}`, body, err => {
+      }
+      updateRequest(`/${this.props.app}/users/${this.props.user}`, body, err => {
         if(err){
           console.log(err);
           return;

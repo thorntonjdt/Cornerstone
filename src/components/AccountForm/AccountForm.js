@@ -1,9 +1,9 @@
 import React from 'react';
 
-import APIManager from 'utils/APIManager.js';
-import Input from 'components/Input/Input.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest, updateRequest } from 'utils/APIManager';
+import Input from 'components/Input/Input';
+import FilledButton from 'components/FilledButton/FilledButton';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './AccountForm.css';
 
@@ -30,7 +30,7 @@ class AccountForm extends React.Component {
     this.updatePassword = this.updatePassword.bind(this);
   }
   componentDidMount(){
-    APIManager.get(`/${this.props.app}/users/${this.props.user}/account`, (err, response) => {
+    getRequest(`/${this.props.app}/users/${this.props.user}/account`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -58,11 +58,11 @@ class AccountForm extends React.Component {
     errors.emailPassword = emailPassword.length < 7 ? true : false;
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
-      let body = JSON.stringify({
+      let body = {
         email: newEmail,
         password: emailPassword
-      })
-      APIManager.update(`/${this.props.app}/users/${this.props.user}/email`, body, err => {
+      }
+      updateRequest(`/${this.props.app}/users/${this.props.user}/email`, body, err => {
         if(err){
           this.setState({emailErrors: {emailPassword: true}})
         }
@@ -83,11 +83,11 @@ class AccountForm extends React.Component {
     errors.confirmPassword = newPassword != confirmPassword ? true : false;
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
-      let body = JSON.stringify({
+      let body = {
         oldPassword: currentPassword,
         password: newPassword
-      })
-      APIManager.update(`/${this.props.app}/users/${this.props.user}/password`, body, err => {
+      }
+      updateRequest(`/${this.props.app}/users/${this.props.user}/password`, body, err => {
         if(err){
           this.setState({passwordErrors: {currentPassword: true}})
         }

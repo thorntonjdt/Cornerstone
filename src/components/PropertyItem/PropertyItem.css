@@ -96,7 +96,7 @@
 }
 @media (min-width: 640px) and (max-width: 900px) {
   .card {
-    width: 49%;
+    width: 48%;
   },
   .card:nth-child(2) {
     margin-left: 1.5%;

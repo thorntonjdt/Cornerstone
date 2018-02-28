@@ -1,19 +1,19 @@
 import React from 'react';
 
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/CardHeader/CardHeader.js';
-import Modal from 'components/Modal/Modal.js';
-import PaymentForm from 'components/PaymentForm/PaymentForm.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import TransactionItem from 'components/TransactionItem/TransactionItem.js';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/CardHeader/CardHeader';
+import Modal from 'components/Modal/Modal';
+import PaymentForm from 'components/PaymentForm/PaymentForm';
+import FilledButton from 'components/FilledButton/FilledButton';
+import TransactionItem from 'components/TransactionItem/TransactionItem';
 
 import styles from './TenantTransactions.css';
 
-const TenantTransactions = ({lease }) => {
-  const activeTransactions = lease.transactions.filter(transaction =>
+const TenantTransactions = ({lease, transactions, addTransaction}) => {
+  const activeTransactions = transactions.filter(transaction =>
     new Date(transaction.date) >= Date.now()
   )
-  const completedTransactions = lease.transactions.filter(transaction =>
+  const completedTransactions = transactions.filter(transaction =>
     new Date(transaction.date) < Date.now()
   )
   return(
@@ -35,7 +35,7 @@ const TenantTransactions = ({lease }) => {
               }
             >
               {closeModal =>
-                <PaymentForm leaseId={lease._id} closeModal={closeModal}/>
+                <PaymentForm leaseId={lease._id} closeModal={closeModal} addTransaction={addTransaction} />
               }
             </Modal>
           </div>

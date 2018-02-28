@@ -14,7 +14,7 @@
   top: 50%;
   transform: translateY(-50%);
   right: 25px;
-  z-index: 2500;
+  z-index: 2200;
 }
 
 .buttons span:hover {

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Card from 'components/Card/Card.js';
-import Image from 'components/Image/Image.js';
+import Card from 'components/Card/Card';
+import Image from 'components/Image/Image';
 
 import styles from './Rental.css';
 

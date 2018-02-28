@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Image from 'components/Image/Image.js';
-import Dropdown from 'components/Dropdown/Dropdown.js';
+import Image from 'components/Image/Image';
+import Dropdown from 'components/Dropdown/Dropdown';
 
 import styles from './PropertyItem.css';
 

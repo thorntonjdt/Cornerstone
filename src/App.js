@@ -3,31 +3,31 @@ import { Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import jwtDecode from 'jwt-decode';
 
-import Public from 'layouts/Public/Public.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import Public from 'layouts/Public/Public';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 const Landing = Loadable({
-  loader: () => import('./Pages/Public/Landing/Landing.js'),
+  loader: () => import('./pages/Public/Landing/Landing'),
   loading: () => LoadSpinner
 })
 
 const Search = Loadable({
-  loader: () => import('./Pages/Public/Search/Search.js'),
+  loader: () => import('./pages/Public/Search/Search'),
   loading: () => LoadSpinner
 })
 
 const Listing = Loadable({
-  loader: () => import('./Pages/Public/Listing/Listing.js'),
+  loader: () => import('./pages/Public/Listing/Listing'),
   loading: () => LoadSpinner
 })
 
 const ManagerApp = Loadable({
-  loader: () => import('./Pages/Manager'),
+  loader: () => import('./pages/Manager'),
   loading: () => LoadSpinner
 })
 
 const TenantApp = Loadable({
-  loader: () => import('./Pages/Tenant'),
+  loader: () => import('./pages/Tenant'),
   loading: () => LoadSpinner
 })
 
@@ -37,10 +37,12 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      user: null
+      user: null,
+      offline: false
     }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleOffline = this.handleOffline.bind(this);
   }
   componentDidMount(){
     let token = window.sessionStorage.getItem('jwtToken');
@@ -48,6 +50,15 @@ class App extends React.Component {
       let user = jwtDecode(token);
       this.setState({ user: user });
     }
+    window.addEventListener('offline', this.handleOffline);
+    window.addEventListener('online', this.handleOffline);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('offline', this.handleOffline);
+    window.removeEventListener('online', this.handleOffline);
+  }
+  handleOffline(event) {
+    this.setState({ offline: event.type !== 'online' });
   }
   login(token){
     window.sessionStorage.setItem('jwtToken', token);
@@ -67,7 +78,7 @@ class App extends React.Component {
     }
   }
   render(){
-    const { user } = this.state;
+    const { user, offline } = this.state;
     return(
       <Public user={user} logout={this.logout} login={this.login} history={this.props.history} location={this.props.location.pathname}>
         <Route exact path="/" component={Landing} />
@@ -75,6 +86,7 @@ class App extends React.Component {
         <Route path="/listings/:id" component={props => <Listing user={user} logout={this.logout} login={this.login} {...props}/>} />
         <Route path="/m" render={props => <ManagerApp user={user} logout={this.logout} match={props.match.url}/>} />
         <Route path="/t" render={props => <TenantApp user={user} logout={this.logout} match={props.match.url}/>} />
+        {offline && <div className={styles.offline}>It looks like you're offline. Some parts of Cornerstone may not work right now.</div>}
       </Public>
     );
   }

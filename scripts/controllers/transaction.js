@@ -1,48 +1,58 @@
-var Transaction = require('../models/transaction.js');
-var Lease = require('../models/lease.js');
+var Transaction = require('../models/transaction');
+var Lease = require('../models/lease');
 
 module.exports = {
   managerCreate: async (req, res) => {
+    if(req.body.amount && req.body.description && req.body.date){
+      var newTransaction = new Transaction({
+        amount: req.body.amount,
+        description: req.body.description,
+        date: req.body.date,
+        lease: req.params.id
+      })
 
-    var newTransaction = new Transaction({
-      amount: req.body.amount,
-      description: req.body.description,
-      date: req.body.date,
-      lease: req.params.id
-    })
+      var transactionDate = new Date(req.body.date);
+      transactionDate.setHours(0,0,0,0);
+      //If transaction is dated before today then update lease balance
+      var shouldAddToBalance = transactionDate <= Date.now();
+      if(shouldAddToBalance){
+        var update = {$inc: {balance: newTransaction.amount}, $push: {transactions: newTransaction._id}}
+      } else {
+        var update = {$push: {transactions: newTransaction._id}}
+      }
+      var lease = await Lease.findByIdAndUpdate(req.params.id, update)
 
-    var shouldAddToBalance = req.body.date < Date.now();
+      //and record new balance in transaction
+      if(shouldAddToBalance){
+        newTransaction.balance = lease.balance + newTransaction.amount;
+      }
+      await newTransaction.save();
 
-    if(shouldAddToBalance){
-      var update = {$inc: {balance: newTransaction.amount}, $push: {transactions: newTransaction._id}}
+      res.send({"response": req.params.id});
     } else {
-      var update = {$push: {transactions: newTransaction._id}}
+      res.send({"error": "Invalid"})
     }
 
-    var lease = await Lease.findByIdAndUpdate(req.params.id, update)
-
-    if(shouldAddToBalance){
-      newTransaction.balance = lease.balance + newTransaction.amount;
-    }
-
-    await newTransaction.save();
-
-    res.send({"response": req.params.id});
   },
 
   tenantCreate: async (req, res) => {
-    var newTransaction = new Transaction({
-      amount: req.body.amount,
-      description: req.body.description,
-      date: Date.now()
-    })
+    if(req.body.amount && req.body.description){
+      var newTransaction = new Transaction({
+        amount: req.body.amount,
+        description: req.body.description,
+        date: Date.now()
+      })
 
-    var lease = await Lease.findByIdAndUpdate(req.params.id, {$inc: {balance: newTransaction.amount}, $push: {transactions: newTransaction._id}})
+      var lease = await Lease.findByIdAndUpdate(req.params.id, {$inc: {balance: newTransaction.amount}, $push: {transactions: newTransaction._id}}).lean();
 
-    newTransaction.balance = lease.balance + newTransaction.amount;
+      //Record new balance in new transaction
+      newTransaction.balance = lease.balance + newTransaction.amount;
 
-    await newTransaction.save();
+      await newTransaction.save();
 
-    res.send({"response": "success"});
+      res.send({"response": "Success"});
+    } else {
+      res.send({"error": "Invalid"})
+    }
   }
 }

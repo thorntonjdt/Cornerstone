@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Image from 'components/Image/Image.js';
+import Image from 'components/Image/Image';
 
 import styles from './ListingItem.css';
 
@@ -18,7 +18,7 @@ const ListingItem = ({listing, location}) => (
         <p>${listing.rent}/mo • {listing.bedrooms} Bed • {listing.bathrooms} Bath</p>
       </div>
     </div>
-    <div>
+    <div className={styles.buttons}>
       <Link to={`/m/listings/${listing._id}/update`}>
         <span className={styles.actions}>Edit Listing</span>
       </Link>

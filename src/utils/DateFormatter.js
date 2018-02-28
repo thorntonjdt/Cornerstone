@@ -1,4 +1,4 @@
-function formatDate(date, getTime){
+export default function formatDate (date, getTime){
   var monthNames = [
     "January", "February", "March",
     "April", "May", "June", "July",
@@ -26,5 +26,3 @@ function formatDate(date, getTime){
 
   return formattedDate;
 };
-
-export default formatDate;

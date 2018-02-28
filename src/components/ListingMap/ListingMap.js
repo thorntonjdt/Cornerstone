@@ -1,7 +1,7 @@
 import React from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-export class MapContainer extends React.Component {
+export class ListingMap extends React.Component {
 render() {
   let { google, style, center } = this.props;
     return (
@@ -21,5 +21,5 @@ render() {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyDLN1zBL_sAjEQwJ2843b1W_B_SlkH1eLs")
-})(MapContainer)
+  apiKey: ("your-google-api-key")
+})(ListingMap)

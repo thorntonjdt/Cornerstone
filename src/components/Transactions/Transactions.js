@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/CardHeader/CardHeader.js';
-import TransactionModal from 'components/TransactionModal/TransactionModal.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import TransactionItem from 'components/TransactionItem/TransactionItem.js';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/CardHeader/CardHeader';
+import TransactionModal from 'components/TransactionModal/TransactionModal';
+import FilledButton from 'components/FilledButton/FilledButton';
+import TransactionItem from 'components/TransactionItem/TransactionItem';
 
 import styles from './Transactions.css';
 
-const Transactions = ({transactions, balance, rent, tenant, lease }) => {
+const Transactions = ({transactions, balance, rent, tenant, lease, addTransaction }) => {
   const activeTransactions = transactions.filter(transaction =>
     new Date(transaction.date) >= Date.now()
   )
@@ -22,7 +22,7 @@ const Transactions = ({transactions, balance, rent, tenant, lease }) => {
           <div className={styles.detailsContainer}>
             <h1>Balance:</h1>
             <div className={styles.green}>${balance}</div>
-            <TransactionModal lease={lease}>
+            <TransactionModal lease={lease} addTransaction={addTransaction}>
               {(openCreditModal, openBillModal) =>
                 <div className={styles.buttons}>
                   <span className={styles.greyBtn} onClick={openCreditModal}>

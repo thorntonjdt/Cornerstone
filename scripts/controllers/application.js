@@ -1,8 +1,8 @@
-var Property = require('../models/property.js');
-var Listing = require('../models/listing.js');
-var Application = require('../models/application.js');
-var Manager = require('../models/manager.js');
-var Tenant = require('../models/tenant.js');
+var Property = require('../models/property');
+var Listing = require('../models/listing');
+var Application = require('../models/application');
+var Manager = require('../models/manager');
+var Tenant = require('../models/tenant');
 
 module.exports = {
   getOne: async (req, res) => {
@@ -15,7 +15,7 @@ module.exports = {
                                         path: 'property',
                                         select: 'address'
                                       }
-                                    });
+                                    }).lean();
 
     res.send({"payload": application})
   },
@@ -40,6 +40,7 @@ module.exports = {
 
     await Promise.all([updateListing, updateManager, updateTenant, updateProperty]);
 
+    //Push new application notification to manager
     req.io.sockets.to(req.params.managerId).emit('newNotification', notification);
 
     res.send({"message": "Success"});

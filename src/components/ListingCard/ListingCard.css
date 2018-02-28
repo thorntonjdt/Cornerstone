@@ -1,17 +1,16 @@
 .container {
   background-size: cover;
   background-position: center;
-  background-color: #bbb;
-  width: 47.5%;
-  height: 220px;
+  width: 48.75%;
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
   float: left;
+  margin-bottom: 20px;
 }
 
-.container:nth-child(2) {
-  margin-left: 5%;
+.container:nth-child(2n) {
+  margin-left: 2.5%;
 }
 
 .details {

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Subheader from 'components/Subheader/Subheader.js';
-import LoadList from 'components/LoadList/LoadList.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/CardHeader/CardHeader.js';
-import TicketItem from 'components/TicketItem/TicketItem.js';
-import Circle from 'components/Circle/Circle.js';
+import Subheader from 'components/Subheader/Subheader';
+import LoadList from 'components/LoadList/LoadList';
+import FilledButton from 'components/FilledButton/FilledButton';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/CardHeader/CardHeader';
+import TicketItem from 'components/TicketItem/TicketItem';
+import Circle from 'components/Circle/Circle';
 
 import styles from './Maintenance.css';
 

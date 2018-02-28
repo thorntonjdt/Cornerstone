@@ -1,9 +1,9 @@
 import React from 'react';
 
-import APIManager from 'utils/APIManager.js';
-import MapContainer from 'components/MapContainer0/MapContainer.js';
-import ListingCard from 'components/ListingCard/ListingCard.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest } from 'utils/APIManager';
+import SearchMap from 'components/SearchMap/SearchMap';
+import ListingCard from 'components/ListingCard/ListingCard';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './Search.css';
 
@@ -34,7 +34,7 @@ class Search extends React.Component {
     }
   }
   fetchNearbyListings(coords){
-    APIManager.get(`/p/listings/search?lng=${coords.lng}&lat=${coords.lat}`, (err, response) => {
+    getRequest(`/p/listings/search?lng=${coords.lng}&lat=${coords.lat}`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -75,13 +75,21 @@ class Search extends React.Component {
         :
           <div className={styles.content}>
             <div className={styles.map}>
-              <MapContainer center={coords} markers={listings} fetchNearbyMarkers={this.fetchNearbyListings} style={{position: 'absolute', top: 1, bottom: 0, left: 0, width: '100%'}} />
+              <SearchMap center={coords} markers={listings} fetchNearbyMarkers={this.fetchNearbyListings} style={{position: 'absolute', top: 1, bottom: 0, left: 0, width: '100%'}} />
             </div>
-            <div className={styles.properties}>
-              {listings.map(listing =>
-                <ListingCard key={listing._id} listing={listing} />
-              )}
-            </div>
+            {listings.length > 0 ?
+              <div className={styles.properties}>
+                {listings.map(listing =>
+                  <ListingCard key={listing._id} listing={listing} />
+                )}
+              </div>
+            :
+              <div className={styles.noProperties}>
+                <h1>Couldn't Find Any Listings</h1>
+                <p>Move the map or search in another location to find some.</p>
+              </div>
+            }
+
           </div>
         }
       </div>

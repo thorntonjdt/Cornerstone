@@ -1,6 +1,6 @@
 import React from 'react';
 
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
+import formatDate from 'utils/DateFormatter';
 
 import styles from './TransactionItem.css';
 

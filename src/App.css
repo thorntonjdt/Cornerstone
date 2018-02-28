@@ -1,4 +1,3 @@
-
 h1,h2,h3,h4,h5 {
   margin: 0;
   color: #3d4542;
@@ -129,6 +128,18 @@ header {
   padding: 0 15px;
   box-sizing: border-box;
   border-bottom: 1px solid #e4e4e4;
+}
+
+.offline {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #3b9bbe;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 15px;
+  color: white;
 }
 
 @media (min-width: 900px){

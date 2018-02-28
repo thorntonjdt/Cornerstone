@@ -1,10 +1,8 @@
-var mongoose = require('mongoose');
-
-var Property = require('../models/property.js');
-var User = require('../models/user.js');
-var Listing = require('../models/listing.js');
-var Lease = require('../models/lease.js');
-var Manager = require('../models/manager.js');
+var Property = require('../models/property');
+var User = require('../models/user');
+var Listing = require('../models/listing');
+var Lease = require('../models/lease');
+var Manager = require('../models/manager');
 
 var aws = require('aws-sdk');
 aws.config.loadFromPath('scripts/config/s3.js');
@@ -13,12 +11,13 @@ var multerS3 = require('multer-s3');
 
 var s3 = new aws.S3()
 
+//Uploads image file to s3 bucket 'properties'
 const upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: "jabberproperties",
+        bucket: "cornerstoneproperties",
         key: function (req, file, cb) {
-            cb(null, req.params.id+'.png')
+            cb(null, req.params.id+'.png') //Use property._id for file name
         }
     })
 }).single('image');
@@ -44,33 +43,38 @@ module.exports = {
   },
 
   create: async (req, res) => {
-    let property = await Property.find({address: req.body.address})
-
-    if(!property.length){
+    let property = await Property.findOne({address: req.body.address}).lean();
+    if(!property && req.body.address && req.body.city && req.body.state && req.body.zip && req.body.coords){
       var newProperty = new Property({
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
         zip: req.body.zip,
-        coords: [req.body.lng, req.body.lat],
+        coords: req.body.coords,
         manager: req.params.id
       });
 
       await newProperty.save();
 
       await Manager.update({ _id: req.params.id}, { $push: { properties: newProperty._id}});
-
+      
       res.send({"id": newProperty._id});
     } else {
-      res.send({"error": "There is already a property with that address"})
+      res.send({"error": "Invalid"})
     }
   },
 
   update: async function(req, res) {
+    let property = await Property.find({address: req.body.address}).lean();
 
-    await Property.update({_id: req.params.id}, req.body);
+    if(!property.length && req.body.address && req.body.city && req.body.state && req.body.zip && req.body.coords){
 
-    res.send({"message": "Success"});
+      await Property.update({_id: req.params.id}, req.body);
+
+      res.send({"message": "Success"});
+    } else {
+      res.send({"error": "Invalid"})
+    }
   },
 
   delete: async (req, res) => {
@@ -102,7 +106,7 @@ module.exports = {
   },
 
   getForm: async(req, res) => {
-    let property = await Property.findById(req.params.id, 'address city state zip img listings');
+    let property = await Property.findById(req.params.id, 'address city state zip img listings').lean();
 
     res.send({"payload": property});
   },
@@ -112,7 +116,7 @@ module.exports = {
       if(error){
         console.log(error);
       }
-      Property.update({ _id: req.params.id }, { $set: { img: "https://s3-us-west-2.amazonaws.com/jabberproperties/"+req.params.id+".png" }}, (error) => {
+      Property.update({ _id: req.params.id }, { $set: { img: "https://s3-us-west-2.amazonaws.com/cornerstoneproperties/"+req.params.id+".png" }}, (error) => {
         if(error){
           console.log(error);
         }

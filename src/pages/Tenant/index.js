@@ -2,36 +2,36 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
-import Layout from 'layouts/Base/Base.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import Layout from 'layouts/Base/Base';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 const Payments = Loadable({
-  loader: () => import('./Payments/Payments.js'),
+  loader: () => import('./Payments/Payments'),
   loading: () => LoadSpinner
 })
 
 const Applications = Loadable({
-  loader: () => import('./Applications/Applications.js'),
+  loader: () => import('./Applications/Applications'),
   loading: () => LoadSpinner
 })
 
 const Maintenance = Loadable({
-  loader: () => import('./Maintenance/Maintenance.js'),
+  loader: () => import('./Maintenance/Maintenance'),
   loading: () => LoadSpinner
 })
 
 const MaintenanceForm = Loadable({
-  loader: () => import('./MaintenanceForm/MaintenanceForm.js'),
+  loader: () => import('./MaintenanceForm/MaintenanceForm'),
   loading: () => LoadSpinner
 })
 
 const TicketDetails = Loadable({
-  loader: () => import('./TicketDetails/TicketDetails.js'),
+  loader: () => import('./TicketDetails/TicketDetails'),
   loading: () => LoadSpinner
 })
 
 const Settings = Loadable({
-  loader: () => import('./Settings/Settings.js'),
+  loader: () => import('./Settings/Settings'),
   loading: () => LoadSpinner
 })
 

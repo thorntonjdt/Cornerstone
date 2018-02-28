@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Input from 'components/Input/Input.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import Input from 'components/Input/Input';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './CreateAccountForm.css';
 
@@ -42,7 +42,7 @@ class CreateAccountForm extends React.Component {
         processing: true,
         errors: ''
       })
-      fetch('http://localhost:3000/auth/signup', {
+      fetch('/auth/signup', {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -93,23 +93,23 @@ class CreateAccountForm extends React.Component {
         {this.props.chooseRole &&
           <div style={{marginBottom: 10}}>
             <label for="role">YOU ARE A</label>
-            <select style={errors["role"] ? {borderColor: '#e75b52'} : {}} value={role} name="role" onChange={this.handleInputChange}>
+            <select style={errors.role ? {borderColor: '#e75b52'} : {}} value={role} name="role" onChange={this.handleInputChange}>
               <option disabled selected value="">Select...</option>
               <option value="Tenant">Renter</option>
               <option value="Manager">Landlord</option>
             </select>
-            {errors["role"] && <div className={styles.error}>Are you a landlord or renter?</div>}
+            {errors.role && <div className={styles.error}>Are you a landlord or renter?</div>}
           </div>
         }
 
         <div className={styles.split}>
-          <Input name="first_name" label="first name" value={first_name} hasError={errors["first_name"]} onChange={this.handleInputChange} errorText="Please enter your first name." />
-          <Input name="last_name" label="last name" value={last_name} hasError={errors["last_name"]} onChange={this.handleInputChange} errorText="Please enter your last name." />
+          <Input name="first_name" label="first name" value={first_name} hasError={errors.first_name} onChange={this.handleInputChange} errorText="Please enter your first name." />
+          <Input name="last_name" label="last name" value={last_name} hasError={errors.last_name} onChange={this.handleInputChange} errorText="Please enter your last name." />
         </div>
 
-        <Input name="email" label="email" value={email} hasError={errors["email"]} onChange={this.handleInputChange} errorText={errors["email"]} />
-        <Input password name="password" label="password" value={password} hasError={errors["password"]} onChange={this.handleInputChange} errorText="Password must contain at least 7 characters." />
-        <Input password name="confirmPassword" label="confirm password" value={confirmPassword} hasError={errors["confirmPassword"]} onChange={this.handleInputChange} errorText="Mismatched password entered." />
+        <Input name="email" label="email" value={email} hasError={errors.email} onChange={this.handleInputChange} errorText={errors.email} />
+        <Input password name="password" label="password" value={password} hasError={errors.password} onChange={this.handleInputChange} errorText="Password must contain at least 7 characters." />
+        <Input password name="confirmPassword" label="confirm password" value={confirmPassword} hasError={errors.confirmPassword} onChange={this.handleInputChange} errorText="Mismatched password entered." />
         <button style={{display: 'none'}} type="submit" />
         <FilledButton
           width="100%"

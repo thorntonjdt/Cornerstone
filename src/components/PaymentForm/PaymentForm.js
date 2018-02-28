@@ -1,8 +1,8 @@
 import React from 'react';
 
-import APIManager from 'utils/APIManager.js';
-import Input from 'components/Input/Input.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import { createRequest } from 'utils/APIManager';
+import Input from 'components/Input/Input';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './PaymentForm.css';
 
@@ -20,19 +20,20 @@ class PaymentForm extends React.Component {
   handleSubmit(){
     const { amount, description } = this.state;
     let errors = {};
-    errors.amount = !amount ? true : false;
+    errors.amount = !amount || isNaN(amount) ? true : false;
     errors.description = !description ? true : false;
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
-      const body = JSON.stringify({
+      const body = {
         amount: this.state.amount * -1,
         description: this.state.description
-      })
-      APIManager.create(`/t/leases/${this.props.leaseId}/transactions`, body, err => {
+      }
+      createRequest(`/t/leases/${this.props.leaseId}/transactions`, body, err => {
         if(err){
           console.log(err);
           return;
         }
+        this.props.addTransaction(body);
         this.props.closeModal();
       })
     } else {
@@ -53,8 +54,8 @@ class PaymentForm extends React.Component {
     return(
       <div>
         <h3 style={{marginBottom: 10}}>Submit a Payment</h3>
-        <Input name="amount" label="amount" value={amount} hasError={errors["amount"]} onChange={this.handleInputChange} />
-        <Input name="description" label="description" value={description} hasError={errors["description"]} onChange={this.handleInputChange} />
+        <Input name="amount" label="amount" value={amount} hasError={errors.amount} onChange={this.handleInputChange} />
+        <Input name="description" label="description" value={description} hasError={errors.description} onChange={this.handleInputChange} />
         <FilledButton
           height="35px"
           width="120px"

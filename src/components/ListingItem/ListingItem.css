@@ -19,19 +19,6 @@
 .details p {
   font-size: 11px;
 }
-.image {
-  background-size: cover;
-  background-position: center;
-  width: 60px;
-  height: 60px;
-  margin-right: 15px;
-}
-
-.placeholder {
-  background-color: #f7f7f7;
-  margin-right: 15px;
-}
-
 .info {
   margin-left: 15px;
 }
@@ -62,5 +49,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  },
+  .buttons {
+    margin-top: 10px;
   }
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import APIManager from 'utils/APIManager.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import Input from 'components/Input/Input.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import { createRequest } from 'utils/APIManager';
+import Subheader from 'components/Subheader/Subheader';
+import Input from 'components/Input/Input';
+import BorderButton from 'components/BorderButton/BorderButton';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './MaintenanceForm.css';
 
@@ -35,12 +35,13 @@ class MaintenanceForm extends React.Component {
     const errors = this.validateFields();
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
-      let body = JSON.stringify({
+      let body = {
         lease: this.state.lease,
         title: this.state.title,
         description: this.state.description
-      })
-      APIManager.create(`/t/tenants/${this.props.tenant}/tickets`, body, (err) => {
+      }
+
+      createRequest(`/t/tenants/${this.props.tenant}/tickets`, body, (err) => {
         if(err){
           console.log(err);
           return;
@@ -77,11 +78,11 @@ class MaintenanceForm extends React.Component {
           }
         />
         <form className={styles.ticketForm}>
-          <Input name="title" label="title" value={title} hasError={errors["title"]} onChange={this.handleInputChange} />
+          <Input name="title" label="title" value={title} hasError={errors.title} onChange={this.handleInputChange} />
           <div className={styles.description}>
             <label for="description">Description</label>
             <textarea rows="4" name='description' type='text' value={description} onChange={this.handleInputChange} />
-            {errors["description"] && <div className={styles.errors}>This field is required</div>}
+            {errors.description && <div className={styles.errors}>This field is required</div>}
           </div>
           <FilledButton
             width="100%"

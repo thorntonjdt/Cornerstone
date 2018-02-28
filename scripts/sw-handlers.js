@@ -1,8 +1,7 @@
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function(event){
 	var requestURL = new URL(event.request.url);
 	var isLocal = requestURL.origin == location.origin;
-	var isGETRequest = requestURL.method == 'GET';
-
+	var isGETRequest = event.request.method == 'GET';
 	if(isLocal && isGETRequest){
 		event.respondWith(
 			caches.open('pwaData').then(function(cache) {

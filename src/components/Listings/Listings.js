@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import LoadList from 'components/LoadList/LoadList.js';
-import Filter from 'components/Filter/Filter.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/CardHeader/CardHeader.js';
-import ListingItem from 'components/ListingItem/ListingItem.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import Circle from 'components/Circle/Circle.js';
+import LoadList from 'components/LoadList/LoadList';
+import Filter from 'components/Filter/Filter';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/CardHeader/CardHeader';
+import ListingItem from 'components/ListingItem/ListingItem';
+import BorderButton from 'components/BorderButton/BorderButton';
+import FilledButton from 'components/FilledButton/FilledButton';
+import Circle from 'components/Circle/Circle';
 
 import styles from './Listings.css';
 

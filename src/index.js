@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 const App = Loadable({
-	loader: () => import('./App.js'),
+	loader: () => import('./App'),
 	loading: () => null
 })
 // render the component

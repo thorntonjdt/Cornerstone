@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import LoadList from 'components/LoadList/LoadList.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import Card from 'components/Card/Card.js';
-import TApplicationItem from 'components/TApplicationItem/TApplicationItem.js';
-import Circle from 'components/Circle/Circle.js';
+import LoadList from 'components/LoadList/LoadList';
+import Subheader from 'components/Subheader/Subheader';
+import Card from 'components/Card/Card';
+import TApplicationItem from 'components/TApplicationItem/TApplicationItem';
+import Circle from 'components/Circle/Circle';
 
 import styles from './Applications.css';
 

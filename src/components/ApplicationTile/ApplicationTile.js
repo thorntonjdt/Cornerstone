@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './ApplicationTile.css';
 

@@ -4,26 +4,49 @@ var Manager = require('../models/manager');
 
 module.exports = {
   create: async (req, res) => {
-    var newTicket = new Ticket({
-      lease: req.body.lease,
-      title: req.body.title,
-      description: req.body.description
-    })
+    if(req.body.lease && req.body.title && req.body.description){
+      var newTicket = new Ticket({
+        lease: req.body.lease,
+        title: req.body.title,
+        description: req.body.description
+      })
 
-    await newTicket.save();
+      await newTicket.save();
 
-    let notification = {date: Date.now(), content: `You have a new maintenance request`, label: "View Ticket", link: `/m/maintenance/${newTicket._id}`};
+      let notification = {date: Date.now(), content: `You have a new maintenance request`, label: "View Ticket", link: `/m/maintenance/${newTicket._id}`};
 
-    await Tenant.update({_id: req.params.id}, {$push: {tickets: newTicket._id}});
-    let manager =  await Manager.update({leases: req.body.lease}, {$push: {tickets: newTicket._id, notifications: notification}});
+      await Tenant.update({_id: req.params.id}, {$push: {tickets: newTicket._id}});
 
-    req.io.sockets.to(manager._id).emit('newNotification', notification);
+      let manager =  await Manager.update({leases: req.body.lease}, {$push: {tickets: newTicket._id, notifications: notification}});
 
-    res.send({"message": "success"})
+      //Push new ticket notification to manager
+      req.io.sockets.to(manager._id).emit('newNotification', notification);
+
+      res.send({"message": "Success"})
+    } else {
+      res.send({"error": "Invalid"})
+    }
   },
 
   managerGet: async (req, res) => {
-    let ticket = await Ticket.findById(req.params.id).populate([{path: 'lease', select: 'listing tenant', populate: [{path: 'listing', select: 'unit property', populate: {path: 'property', select: 'address city state'}}, {path: 'tenant', select: 'first_name last_name'}]}, {path: 'comments'}]).lean();
+    let ticket = await Ticket.findById(req.params.id)
+                              .populate([{
+                                path: 'lease',
+                                select: 'listing tenant',
+                                populate: [{
+                                  path: 'listing',
+                                  select: 'unit property',
+                                  populate: {
+                                    path: 'property',
+                                    select: 'address city state'
+                                  }
+                                }, {
+                                  path: 'tenant',
+                                  select: 'first_name last_name'
+                                }]
+                              }, {
+                                path: 'comments'
+                              }]).lean();
 
     res.send({"payload": ticket});
   },
@@ -35,7 +58,21 @@ module.exports = {
   },
 
   tenantGet: async (req, res) => {
-    let ticket = await Ticket.findById(req.params.id).populate([{path: 'lease', select: 'listing', populate: {path: 'listing', select: 'unit property', populate: {path: 'property', select: 'address city state'}}}, {path: 'comments'}]).lean();
+    let ticket = await Ticket.findById(req.params.id)
+                              .populate([{
+                                path: 'lease',
+                                select: 'listing',
+                                populate: {
+                                  path: 'listing',
+                                  select: 'unit property',
+                                  populate: {
+                                    path: 'property',
+                                    select: 'address city state'
+                                  }
+                                }
+                              }, {
+                                path: 'comments'
+                              }]).lean();
 
     res.send({"payload": ticket});
   },

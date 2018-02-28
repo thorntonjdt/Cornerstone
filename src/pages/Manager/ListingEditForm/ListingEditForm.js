@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import APIManager from 'utils/APIManager.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import ImageUploader from 'components/ImageUploader/ImageUploader.js';
-import Toggle from 'components/Toggle/Toggle.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest, uploadImage, updateRequest } from 'utils/APIManager';
+import Subheader from 'components/Subheader/Subheader';
+import Input from 'components/Input/Input';
+import BorderButton from 'components/BorderButton/BorderButton';
+import FilledButton from 'components/FilledButton/FilledButton';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
+import Toggle from 'components/Toggle/Toggle';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './ListingEditForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -29,16 +30,18 @@ class ListingEditForm extends React.Component {
       headline: '',
       description: '',
       image: null,
-      loading: true
+      loading: true,
+      errors: ''
     }
     this.uploadImage = this.uploadImage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleActiveToggle = this.handleActiveToggle.bind(this);
     this.setDateAvailable = this.setDateAvailable.bind(this);
+    this.validateFields = this.validateFields.bind(this);
   }
   componentDidMount(){
-    APIManager.getById(`/m/listings/${this.props.match.params.id}`, (err, response) => {
+    getRequest(`/m/listings/${this.props.match.params.id}`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -57,7 +60,7 @@ class ListingEditForm extends React.Component {
     });
   }
   uploadImage(image){
-    APIManager.uploadImage(`/m/listings/${this.props.match.params.id}/picture`, image, (err) => {
+    uploadImage(`/m/listings/${this.props.match.params.id}/picture`, image, (err) => {
       if(err){
         console.log(err);
         return;
@@ -74,32 +77,40 @@ class ListingEditForm extends React.Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    let { bedrooms, bathrooms, rent, deposit, unit, headline, description, available } = this.state;
-    let body = JSON.stringify({
-      bedrooms: bedrooms,
-      bathrooms: bathrooms,
-      rent: rent,
-      deposit: deposit,
-      unit: unit,
-      headline: headline,
-      description: description,
-      available: available
-    });
-    APIManager.update(`/m/listings/${this.props.match.params.id}`, body, (err, response) => {
-      if(err){
-        console.log(err);
-        return;
-      }
-      this.props.history.push(`/m/properties/${this.state.property}`);
-    });
+    const errors = this.validateFields();
+    const noErrors = Object.keys(errors).every(i => !errors[i])
+    if(noErrors){
+      let { bedrooms, bathrooms, rent, deposit, unit, headline, description, available } = this.state;
+      let body = {
+        bedrooms: bedrooms,
+        bathrooms: bathrooms,
+        rent: rent,
+        deposit: deposit,
+        unit: unit,
+        headline: headline,
+        description: description,
+        available: available
+      };
+
+      updateRequest(`/m/listings/${this.props.match.params.id}`, body, (err, response) => {
+        if(err){
+          console.log(err);
+          return;
+        }
+        this.props.history.push(`/m/properties/${this.state.property}`);
+      });
+    } else {
+      this.setState({errors: errors})
+    }
   }
   handleActiveToggle(){
     let isActive = !this.state.isActive;
     this.setState({isActive: isActive});
-    let body = JSON.stringify({
+    let body = {
       active: isActive
-    })
-    APIManager.update(`/m/listings/${this.props.match.params.id}`, body, (err, response) => {
+    }
+
+    updateRequest(`/m/listings/${this.props.match.params.id}`, body, (err, response) => {
       if(err){
         console.log(error);
         this.setState({isActive: !isActive});
@@ -108,8 +119,19 @@ class ListingEditForm extends React.Component {
       console.log(response);
     })
   }
+  validateFields(){
+    let { bedrooms, bathrooms, rent, unit, headline, description } = this.state;
+    const errors = {};
+    errors.headline = !headline ? true : false;
+    errors.description = !description ? true : false;
+    errors.unit = !unit || isNaN(unit) || unit <= 0 ? true : false;
+    errors.bedrooms = !bedrooms || isNaN(bedrooms) || bedrooms <= 0 ? true : false;
+    errors.bathrooms = !bathrooms || isNaN(bathrooms) || bathrooms <= 0 ? true : false;
+    errors.rent = !rent || isNaN(rent) || rent <= 0 ? true : false;
+    return errors;
+  }
   render(){
-    let { loading, bedrooms, bathrooms, rent, deposit, unit, headline, description, image, isActive, available } = this.state;
+    let { loading, bedrooms, bathrooms, rent, deposit, unit, headline, description, image, isActive, available, errors } = this.state;
     if(!loading){
       return(
         <div>
@@ -142,26 +164,25 @@ class ListingEditForm extends React.Component {
           <div className={styles.editContainer}>
             <div className={styles.activeToggle}><span>Active:</span><Toggle isToggled={isActive} handleToggle={this.handleActiveToggle} /></div>
             <form onSubmit={this.handleSubmit}>
-              <label for="headline">HEADLINE</label>
-              <input name='headline' type='text' value={headline} onChange={this.handleInputChange} className={styles.input} />
-              <label for="description">DESCRIPTION</label>
-              <textarea rows="4" name='description' type='text' value={description} onChange={this.handleInputChange} className={styles.input} />
-              <label for="unit">UNIT #</label>
-              <input name='unit' type='number' value={unit} onChange={this.handleInputChange} className={styles.input} />
-              <label for="bathrooms">BEDROOMS</label>
-              <input name='bedrooms' type='number' value={bedrooms} onChange={this.handleInputChange} className={styles.input} />
-              <label for="bathrooms">BATHROOMS</label>
-              <input name='bathrooms' type='number' value={bathrooms} onChange={this.handleInputChange} className={styles.input} />
-              <label for="rent">RENT</label>
-              <input name='rent' type='number' value={rent} onChange={this.handleInputChange} className={styles.input} />
-              <label for="deposit">DEPOSIT</label>
-              <input name='deposit' type='number' value={deposit} onChange={this.handleInputChange} />
-              <label>AVAILABLE</label>
-              <DatePicker
-                selected={available}
-                onChange={this.setDateAvailable}
-                placeholderText="MM/DD/YYYY"
-              />
+              <Input name="headline" label="headline" value={headline} hasError={errors["headline"]} onChange={this.handleInputChange} />
+              <div className={styles.description}>
+                <label for="description">DESCRIPTION</label>
+                <textarea style={errors.description ? {borderColor: '#e75b52'} : {}} rows="4" name='description' type='text' value={description} onChange={this.handleInputChange} />
+                {errors.description && <div className={styles.errors}>This field is required</div>}
+              </div>
+              <Input name="unit" label="unit #" value={unit} hasError={errors.unit} onChange={this.handleInputChange} />
+              <Input name="bedrooms" label="bedrooms" value={bedrooms} hasError={errors.bedrooms} onChange={this.handleInputChange} />
+              <Input name="bathrooms" label="bathrooms" value={bathrooms} hasError={errors.bathrooms} onChange={this.handleInputChange} />
+              <Input name="rent" label="rent" value={rent} hasError={errors.rent} onChange={this.handleInputChange} />
+              <Input name="deposit" label="deposit" value={deposit} hasError={errors.deposit} onChange={this.handleInputChange} />
+              <div style={{marginBottom: 10}}>
+                <label>AVAILABLE</label>
+                <DatePicker
+                  selected={available}
+                  onChange={this.setDateAvailable}
+                  placeholderText="MM/DD/YYYY"
+                />
+              </div>
               <button style={{display: 'none'}} type="submit" />
               <FilledButton
                 height="35px"

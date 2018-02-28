@@ -5,6 +5,16 @@
   display: inline-block;
 }
 
+.open {
+  color: #55B475;
+  text-transform: uppercase;
+}
+
+.closed {
+  color: #78909C;
+  text-transform: uppercase;
+}
+
 .padding {
   padding: 15px;
 }

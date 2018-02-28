@@ -1,10 +1,10 @@
 import React from 'react';
 import io from 'socket.io-client';
 
-import APIManager from 'utils/APIManager.js';
-import NotificationItem from 'components/NotificationItem/NotificationItem.js';
-import Dropdown from 'components/Dropdown/Dropdown.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
+import { getRequest, deleteRequest } from 'utils/APIManager';
+import NotificationItem from 'components/NotificationItem/NotificationItem';
+import Dropdown from 'components/Dropdown/Dropdown';
+import BorderButton from 'components/BorderButton/BorderButton';
 
 import styles from './Notifications.css';
 
@@ -21,7 +21,7 @@ class Notifications extends React.Component {
     this.id = user.manager ? user.manager : user.tenant;
   }
   componentDidMount(){
-    APIManager.getAll(`/${this.app}/users/${this.id}/notifications`, (err, response) => {
+    getRequest(`/${this.app}/users/${this.id}/notifications`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -41,15 +41,15 @@ class Notifications extends React.Component {
   }
   removeNotification(date){
     const { notifications } = this.state;
-    APIManager.delete(`/${this.app}/users/${this.id}/notifications/${date}`, err => {
+    deleteRequest(`/${this.app}/users/${this.id}/notifications/${date}`, err => {
       if(err){
         console.log(err);
         return;
       }
-      var newArray;
+      var newArray = [...this.state.notifications]
       for(var i = 0; i < notifications.length; i++){
         if(notifications[i].date == date){
-          newArray = notifications.slice(i, i+1);
+          newArray.splice(i, 1);
         }
       }
       this.setState({notifications: newArray});
@@ -59,7 +59,7 @@ class Notifications extends React.Component {
     this.props.history.push(link);
   }
   clearNotifications(){
-    APIManager.delete(`/${this.app}/users/${this.id}/notifications`, err => {
+    deleteRequest(`/${this.app}/users/${this.id}/notifications`, err => {
       if(err){
         console.log(err);
         return;

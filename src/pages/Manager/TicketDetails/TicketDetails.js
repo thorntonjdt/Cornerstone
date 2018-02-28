@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
-import APIManager from 'utils/APIManager.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import Card from 'components/Card/Card.js';
-import Comments from 'components/Comments/Comments.js';
-import Toggle from 'components/Toggle/Toggle.js';
+import formatDate from 'utils/DateFormatter';
+import { getRequest, updateRequest } from 'utils/APIManager';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
+import Subheader from 'components/Subheader/Subheader';
+import BorderButton from 'components/BorderButton/BorderButton';
+import Card from 'components/Card/Card';
+import Comments from 'components/Comments/Comments';
+import Toggle from 'components/Toggle/Toggle';
 
 import styles from './TicketDetails.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -32,7 +32,7 @@ class TicketDetails extends React.Component {
     this.handleToggle = this.handleToggle.bind(this);
   }
   componentDidMount(){
-    APIManager.get(`/m/tickets/${this.props.match.params.id}`, (err, response) => {
+    getRequest(`/m/tickets/${this.props.match.params.id}`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -46,10 +46,10 @@ class TicketDetails extends React.Component {
   }
   setAppointment(day){
     this.setState({appointment: day, showDatePicker: false})
-    let body = JSON.stringify({
+    let body = {
       appointment: day
-    })
-    APIManager.update(`/m/tickets/${this.props.match.params.id}`, body, err => {
+    }
+    updateRequest(`/m/tickets/${this.props.match.params.id}`, body, err => {
       if(err){
         console.log(err);
         return;
@@ -62,10 +62,10 @@ class TicketDetails extends React.Component {
   handleToggle(){
     let status = !this.state.open
     this.setState({open: status})
-    let body = JSON.stringify({
+    let body = {
       open: status
-    })
-    APIManager.update(`/m/tickets/${this.props.match.params.id}`, body, err => {
+    }
+    updateRequest(`/m/tickets/${this.props.match.params.id}`, body, err => {
       if(err){
         console.log(err);
         return;

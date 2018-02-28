@@ -1,4 +1,4 @@
-var Tenant = require('../models/tenant.js');
+var Tenant = require('../models/tenant');
 
 module.exports = {
   getApplications: async (req, res) => {
@@ -16,13 +16,13 @@ module.exports = {
                                             select: 'address'
                                           }
                                         }
-                                      });
+                                      }).lean();
 
     res.send({"payload": tenant.applications});
   },
 
   getNotifications: async (req, res) => {
-    let tenant = await Tenant.findById(req.params.id).select('notifications');
+    let tenant = await Tenant.findById(req.params.id, 'notifications').lean();
 
     res.send({payload: tenant.notifications});
   },
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   removeNotification: async (req, res) => {
-    await Tenant.update({_id: req.params.id}, { $pull: { notifications: { date: req.params.date }}});
+    await Tenant.update({_id: req.params.id}, { $pull: { notifications: { date: (+req.params.date) }}});
 
     res.send({"message": "Success"});
   },
@@ -47,16 +47,16 @@ module.exports = {
 
   getLease: async (req, res) => {
     let tenant = await Tenant.findById(req.params.id)
-      .populate({
-        path: 'lease',
-        populate: [{
-          path: 'listing',
-          select: 'unit property bedrooms bathrooms image',
-          populate: {path: 'property', select: 'address city state zip'}
-        }, {
-          path: 'transactions'
-        }]
-      }).lean();
+                              .populate({
+                                path: 'lease',
+                                populate: [{
+                                  path: 'listing',
+                                  select: 'unit property bedrooms bathrooms image',
+                                  populate: {path: 'property', select: 'address city state zip'}
+                                }, {
+                                  path: 'transactions'
+                                }]
+                              }).lean();
 
     if(!tenant) {
       throw new Error("No lease by this id");
@@ -66,7 +66,22 @@ module.exports = {
   },
 
   getTickets: async (req, res) => {
-    let tenant = await Tenant.findById(req.params.id).select('tickets lease').populate({path: 'tickets', populate: {path: 'lease', select: 'listing', populate: {path: 'listing', select: 'unit property', populate: {path: 'property', select: 'address'} }}}).lean();
+    let tenant = await Tenant.findById(req.params.id, 'tickets lease')
+                              .populate({
+                                path: 'tickets',
+                                populate: {
+                                  path: 'lease',
+                                  select: 'listing',
+                                  populate: {
+                                    path: 'listing',
+                                    select: 'unit property',
+                                    populate: {
+                                      path: 'property',
+                                      select: 'address'
+                                    }
+                                  }
+                                }
+                              }).lean();
 
     res.send({"payload": tenant});
   }

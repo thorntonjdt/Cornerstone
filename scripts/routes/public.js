@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var listing = require('../controllers/listing.js');
+var listing = require('../controllers/listing');
 
-var wrapAsync = require('../helpers/wrappers.js').async;
+var async = require('../helpers/wrappers').async;
 
-router.get('/listings/search', wrapAsync(listing.search));
+router.get('/listings/search', async(listing.search));
 
-router.get('/listings/:id', wrapAsync(listing.getPublic));
+router.get('/listings/:id', async(listing.getPublic));
 
 module.exports = router;

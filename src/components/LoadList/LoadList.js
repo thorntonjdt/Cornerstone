@@ -1,8 +1,8 @@
 import React from 'react';
 import get from 'lodash/get';
 
-import APIManager from 'utils/APIManager.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest } from 'utils/APIManager';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 class LoadList extends React.Component {
   constructor(props){
@@ -13,7 +13,7 @@ class LoadList extends React.Component {
     }
   }
   componentDidMount(){
-    APIManager.get(this.props.url, (err, response) => {
+    getRequest(this.props.url, (err, response) => {
       if(err){
         console.log(err);
         return

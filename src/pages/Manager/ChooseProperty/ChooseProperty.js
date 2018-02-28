@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import APIManager from 'utils/APIManager.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import Card from 'components/Card/Card.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest } from 'utils/APIManager';
+import Subheader from 'components/Subheader/Subheader';
+import Card from 'components/Card/Card';
+import FilledButton from 'components/FilledButton/FilledButton';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './ChooseProperty.css'
 
@@ -22,7 +22,7 @@ class ChooseProperty extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
   componentDidMount(){
-    APIManager.get(`/m/managers/${this.props.manager}/properties`, (err, response) => {
+    getRequest(`/m/managers/${this.props.manager}/properties`, (err, response) => {
       if(err){
         console.log(err);
         return;

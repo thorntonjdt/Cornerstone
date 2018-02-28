@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Image from 'components/Image/Image.js';
+import Image from 'components/Image/Image';
 
 import styles from './ListingCard.css';
 
@@ -10,7 +10,7 @@ const ListingCard = ({listing}) => (
     <Image
       image={listing.image}
       width="100%"
-      height="100%"
+      height="220px"
     />
     <div className={styles.details}>${listing.rent} • {listing.bedrooms} BED • {listing.bathrooms} BATH</div>
     <div className={styles.headline}>{listing.headline}</div>

@@ -2,10 +2,10 @@ import React from 'react';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import APIManager from 'utils/APIManager.js';
-import Card from 'components/Card/Card.js';
-import Input from 'components/Input/Input.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import { createRequest } from 'utils/APIManager';
+import Card from 'components/Card/Card';
+import Input from 'components/Input/Input';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './TransactionModal.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -30,24 +30,25 @@ class TransactionModal extends React.Component {
   handleSubmit(){
     const { modal, date, amount, description } = this.state;
     const setDate = modal == 'bill' ? date : Date.now();
-    const setAmount = modal == 'bill' ? amount : amount * -1
     let errors = {};
-    errors.amount = !setAmount ? true : false;
+    errors.amount = !amount || isNaN(amount) ? true : false;
     errors.description = !description ? true : false;
     errors.date = !setDate ? true : false;
     const noErrors = Object.keys(errors).every(i => !errors[i])
     if(noErrors){
-      let body = JSON.stringify({
+      const setAmount = modal == 'bill' ? amount : amount * -1;
+      var body = {
         date: setDate,
         description: description,
         amount: setAmount
-      })
-      APIManager.create(`/m/leases/${this.props.lease}/transactions`, body, err => {
+      }
+      createRequest(`/m/leases/${this.props.lease}/transactions`, body, err => {
         if(err){
           console.log(err);
           return;
         }
-        this.setState({modal: null})
+        this.props.addTransaction(body);
+        this.setState({modal: null, date: '', description: '', amount: '', errors: ''})
       })
     } else {
       this.setState({errors: errors})
@@ -87,8 +88,8 @@ class TransactionModal extends React.Component {
               <Card>
                 <div className={styles.padding}>
                     <h3 style={{marginBottom: 10}}>{modal == 'bill' ? "Add a charge" : "Add a credit"}</h3>
-                    <Input name="amount" label="amount" value={amount} hasError={errors["amount"]} onChange={this.handleInputChange} />
-                    <Input name="description" label="description" value={description} hasError={errors["description"]} onChange={this.handleInputChange} />
+                    <Input name="amount" label="amount" value={amount} hasError={errors.amount} onChange={this.handleInputChange} />
+                    <Input name="description" label="description" value={description} hasError={errors.description} onChange={this.handleInputChange} />
                     {modal == 'bill' &&
                       <div style={{marginBottom: 10}}>
                         <label>Due</label>
@@ -97,7 +98,7 @@ class TransactionModal extends React.Component {
                           onChange={this.setDueDate}
                           placeholderText="MM/DD/YYYY"
                         />
-                        {errors["date"] && <div className={styles.error}>You must set a due date</div>}
+                        {errors.date && <div className={styles.error}>You must set a due date</div>}
                       </div>
                     }
                     <FilledButton

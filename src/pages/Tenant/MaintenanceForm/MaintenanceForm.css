@@ -2,6 +2,7 @@
   padding: 15px;
   width: 100%;
   margin: 25px auto;
+  box-sizing: border-box;
 }
 
 .errors {

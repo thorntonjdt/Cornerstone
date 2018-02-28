@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Filter from 'components/Filter/Filter.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/CardHeader/CardHeader.js';
-import ApplicationItem from 'components/ApplicationItem/ApplicationItem.js';
+import Filter from 'components/Filter/Filter';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/CardHeader/CardHeader';
+import ApplicationItem from 'components/ApplicationItem/ApplicationItem';
 
 import styles from './Applications.css';
 

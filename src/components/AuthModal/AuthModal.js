@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Card from 'components/Card/Card.js';
-import CreateAccountForm from 'components/CreateAccountForm/CreateAccountForm.js';
-import LoginForm from 'components/LoginForm/LoginForm.js';
+import Card from 'components/Card/Card';
+import CreateAccountForm from 'components/CreateAccountForm/CreateAccountForm';
+import LoginForm from 'components/LoginForm/LoginForm';
 
 import styles from './AuthModal.css';
 

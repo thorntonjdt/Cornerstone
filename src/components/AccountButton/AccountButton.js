@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Dropdown from 'components/Dropdown/Dropdown.js';
+import Dropdown from 'components/Dropdown/Dropdown';
 
 import styles from './AccountButton.css';
 

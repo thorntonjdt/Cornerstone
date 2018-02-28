@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
-import APIManager from 'utils/APIManager.js';
-import Logo from 'components/Logo/Logo.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import Image from 'components/Image/Image.js';
-import Card from 'components/Card/Card.js';
-import ApplicationTile from 'components/ApplicationTile/ApplicationTile.js';
-import ApplicationAuth from 'components/ApplicationAuth/ApplicationAuth.js';
-import MapContainer from 'components/MapContainer/MapContainer.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import formatDate from 'utils/DateFormatter';
+import { getRequest, createRequest } from 'utils/APIManager';
+import FilledButton from 'components/FilledButton/FilledButton';
+import Image from 'components/Image/Image';
+import Card from 'components/Card/Card';
+import ApplicationTile from 'components/ApplicationTile/ApplicationTile';
+import ApplicationAuth from 'components/ApplicationAuth/ApplicationAuth';
+import ListingMap from 'components/ListingMap/ListingMap';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './Listing.css';
 
@@ -39,55 +38,52 @@ class Listing extends React.Component {
     this.sendApplication = this.sendApplication.bind(this);
   }
   componentDidMount(){
-    fetch(`http://localhost:3000/api/v1/p${this.props.match.url}`)
-			.then(response => response.json())
-			.then(({payload, error}) => {
-        if(error){
-          console.log(error);
-          return;
-        }
-        if(payload.active){
-          console.log('ok');
-          var applied = false;
-          if(this.props.user){
-            for(var i = 0; i < payload.applications.length; i++){
-              if(payload.applications[i].applicant == this.props.user.id){
-                applied = true;
-                break;
-              }
+    getRequest(`/p${this.props.match.url}`, (err, response) => {
+      if(err){
+        console.log(err);
+        return;
+      }
+      if(response.active){
+        var applied = false;
+        if(this.props.user){
+          for(var i = 0; i < response.applications.length; i++){
+            if(response.applications[i].applicant == this.props.user.id){
+              applied = true;
+              break;
             }
           }
-          this.setState({
-            propertyId: payload.property._id,
-            image: payload.image,
-            address: payload.property.address,
-            city: payload.property.city,
-            state: payload.property.state,
-            zip: payload.property.zip,
-            coords: payload.property.coords,
-            bedrooms: payload.bedrooms,
-            bathrooms: payload.bathrooms,
-            rent: payload.rent,
-            headline: payload.headline,
-            description: payload.description,
-            manager: payload.property.manager,
-            applied: applied,
-            deposit: payload.deposit,
-            available: payload.available,
-            loading: false
-          })
-        } else {
-          this.setState({active: false, loading: false})
         }
-      });
+        this.setState({
+          propertyId: response.property._id,
+          image: response.image,
+          address: response.property.address,
+          city: response.property.city,
+          state: response.property.state,
+          zip: response.property.zip,
+          coords: response.property.coords,
+          bedrooms: response.bedrooms,
+          bathrooms: response.bathrooms,
+          rent: response.rent,
+          headline: response.headline,
+          description: response.description,
+          manager: response.property.manager,
+          applied: applied,
+          deposit: response.deposit,
+          available: response.available,
+          loading: false
+        })
+      } else {
+        this.setState({active: false, loading: false})
+      }
+    })
   }
   sendApplication(){
-    let body = JSON.stringify({
+    let body = {
       user: this.props.user.id,
       tenant: this.props.user.tenant,
       address: this.state.address
-    });
-    APIManager.create(`/t/users/${this.state.manager}/properties/${this.state.propertyId}${this.props.match.url}/applications`, body, (err, response) => {
+    };
+    createRequest(`/t/users/${this.state.manager}/properties/${this.state.propertyId}${this.props.match.url}/applications`, body, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -159,7 +155,7 @@ class Listing extends React.Component {
                   <div className={styles.locationContainer}>
                     <h5>Location</h5>
                     <a className={styles.link} href={`https://maps.google.com/?q=${address} ${city} ${state} ${zip}`}>{address}, {city}, {state} {zip}</a>
-                    <MapContainer center={{lat: coords[1], lng: coords[0]}} style={{position: 'relative', width: '100%', height: 400, marginTop: 10}}/>
+                    <ListingMap center={{lat: coords[1], lng: coords[0]}} style={{position: 'relative', width: '100%', height: 400, marginTop: 10}}/>
                   </div>
                 </div>
               </Card>

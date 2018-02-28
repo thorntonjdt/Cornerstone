@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Card from 'components/Card/Card.js';
+import Card from 'components/Card/Card';
 
 import styles from './ImageUploader.css';
 

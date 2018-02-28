@@ -1,7 +1,7 @@
 import React from 'react';
 
-import CreateAccountForm from 'components/CreateAccountForm/CreateAccountForm.js';
-import LoginForm from 'components/LoginForm/LoginForm.js';
+import CreateAccountForm from 'components/CreateAccountForm/CreateAccountForm';
+import LoginForm from 'components/LoginForm/LoginForm';
 
 import styles from './ApplicationAuth.css';
 

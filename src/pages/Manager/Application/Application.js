@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import APIManager from 'utils/APIManager.js';
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import Card from 'components/Card/Card.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest } from 'utils/APIManager';
+import formatDate from 'utils/DateFormatter';
+import Subheader from 'components/Subheader/Subheader';
+import Card from 'components/Card/Card';
+import FilledButton from 'components/FilledButton/FilledButton';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './Application.css';
 
@@ -26,7 +26,7 @@ class Application extends React.Component {
     }
   }
   componentDidMount(){
-    APIManager.getById(this.props.match.url, (err, response) => {
+    getRequest(this.props.match.url, (err, response) => {
       if(err){
         console.log(err);
         return;

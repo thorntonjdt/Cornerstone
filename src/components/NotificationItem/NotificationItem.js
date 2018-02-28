@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
+import formatDate from 'utils/DateFormatter';
 
 import styles from './NotificationItem.css';
 

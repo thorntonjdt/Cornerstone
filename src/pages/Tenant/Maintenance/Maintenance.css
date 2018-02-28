@@ -24,9 +24,6 @@
 }
 
 @media (min-width: 900px){
-  .padding {
-    padding: 10px 70px;
-  },
   .createBtn {
     width: 32%;
   }

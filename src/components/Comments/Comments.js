@@ -1,8 +1,8 @@
 import React from 'react';
 
-import APIManager from 'utils/APIManager.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import CommentItem from 'components/CommentItem/CommentItem.js';
+import { createRequest } from 'utils/APIManager';
+import FilledButton from 'components/FilledButton/FilledButton';
+import CommentItem from 'components/CommentItem/CommentItem';
 
 import styles from './Comments.css';
 
@@ -26,11 +26,11 @@ class Comments extends React.Component {
     if(this.state.value.length > 0){
       e.preventDefault();
       const { user, ticket, addComment, app } = this.props;
-      let body = JSON.stringify({
+      let body = {
         author: {id: user.id, label: user.first_name[0]+user.last_name[0]},
         content: this.state.value
-      })
-      APIManager.create(`/${app}/tickets/${ticket}/comments`, body, (err, response) => {
+      }
+      createRequest(`/${app}/tickets/${ticket}/comments`, body, (err, response) => {
         if(err){
           console.log(err);
           return;

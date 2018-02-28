@@ -64,6 +64,15 @@
   composes: links from '../../../App.css';
 }
 
+.error {
+  font-size: 12px;
+  background-color: #FDD5CE;
+  padding: 5px;
+  border-radius: 4px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
 @media (min-width: 640px) {
   .photoContainer {
     width: 40%;

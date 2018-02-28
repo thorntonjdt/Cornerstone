@@ -2,86 +2,86 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
-import Layout from 'layouts/Base/Base.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import Layout from 'layouts/Base/Base';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 const Properties = Loadable({
-  loader: () => import('./Properties/Properties.js'),
+  loader: () => import('./Properties/Properties'),
   loading: () => LoadSpinner
 });
 
 const Listings = Loadable({
-  loader: () => import('./Listings/Listings.js'),
+  loader: () => import('./Listings/Listings'),
   loading: () => LoadSpinner
 });
 
 const Applications = Loadable({
-  loader: () => import('./Applications/Applications.js'),
+  loader: () => import('./Applications/Applications'),
   loading: () => LoadSpinner
 });
 
 const Leases = Loadable({
-  loader: () => import('./Payments/Payments.js'),
+  loader: () => import('./Payments/Payments'),
   loading: () => LoadSpinner
 });
 
 const LeaseDetails = Loadable({
-  loader: () => import('./LeaseDetails/LeaseDetails.js'),
+  loader: () => import('./LeaseDetails/LeaseDetails'),
   loading: () => LoadSpinner
 });
 
 const PropertyForm = Loadable({
-  loader: () => import('./PropertyForm/PropertyForm.js'),
+  loader: () => import('./PropertyForm/PropertyForm'),
   loading: () => LoadSpinner
 });
 
 const PropertyEditForm = Loadable({
-  loader: () => import('./PropertyEditForm/PropertyEditForm.js'),
+  loader: () => import('./PropertyEditForm/PropertyEditForm'),
   loading: () => LoadSpinner
 });
 
 const Property = Loadable({
-  loader: () => import('./PropertyDetails/PropertyDetails.js'),
+  loader: () => import('./PropertyDetails/PropertyDetails'),
   loading: () => LoadSpinner
 });
 
 const ListingForm = Loadable({
-  loader: () => import('./ListingForm/ListingForm.js'),
+  loader: () => import('./ListingForm/ListingForm'),
   loading: () => LoadSpinner
 });
 
 const ListingEditForm = Loadable({
-  loader: () => import('./ListingEditForm/ListingEditForm.js'),
+  loader: () => import('./ListingEditForm/ListingEditForm'),
   loading: () => LoadSpinner
 });
 
 const ChooseProperty = Loadable({
-  loader: () => import('./ChooseProperty/ChooseProperty.js'),
+  loader: () => import('./ChooseProperty/ChooseProperty'),
   loading: () => LoadSpinner
 })
 
 const Application = Loadable({
-  loader: () => import('./Application/Application.js'),
+  loader: () => import('./Application/Application'),
   loading: () => LoadSpinner
 });
 
 const LeaseForm = Loadable({
-  loader: () => import('./LeaseForm/LeaseForm.js'),
+  loader: () => import('./LeaseForm/LeaseForm'),
   loading: () => LoadSpinner
 });
 
 const Maintenance = Loadable({
-  loader: () => import('./Maintenance/Maintenance.js'),
+  loader: () => import('./Maintenance/Maintenance'),
   loading: () => LoadSpinner
 })
 
 const TicketDetails = Loadable({
-  loader: () => import('./TicketDetails/TicketDetails.js'),
+  loader: () => import('./TicketDetails/TicketDetails'),
   loading: () => LoadSpinner
 })
 
 const Settings = Loadable({
-  loader: () => import('./Settings/Settings.js'),
+  loader: () => import('./Settings/Settings'),
   loading: () => LoadSpinner
 })
 

@@ -1,8 +1,9 @@
 var jwt = require('jsonwebtoken');
+var secret = require('../config').secret;
 
 module.exports = {
   manager: (req, res, next) => {
-    let token = req.headers.authorization ? jwt.verify(req.headers.authorization.split(' ')[1], 'this is my secret and nobody elses') : '';
+    let token = req.headers.authorization ? jwt.verify(req.headers.authorization.split(' ')[1], secret) : '';
     if(token && token.manager) {
       next();
     } else {
@@ -10,7 +11,7 @@ module.exports = {
     }
   },
   tenant: (req, res, next) => {
-    let token = req.headers.authorization ? jwt.verify(req.headers.authorization.split(' ')[1], 'this is my secret and nobody elses') : '';
+    let token = req.headers.authorization ? jwt.verify(req.headers.authorization.split(' ')[1], secret) : '';
     if(token && token.tenant) {
       next();
     } else {

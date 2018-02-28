@@ -1,29 +1,33 @@
-var path = require('path');
 var jwt = require('jsonwebtoken');
+var secret = require('../config').secret;
 
-var User = require('../models/user.js');
-var Manager = require('../models/manager.js');
-var Tenant = require('../models/tenant.js');
+var User = require('../models/user');
+var Manager = require('../models/manager');
+var Tenant = require('../models/tenant');
 
 module.exports = {
   create: async (req, res) => {
     const { email, password, first_name, last_name, role } = req.body
+    var reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if(!email || !password || !first_name || !last_name) {
-      throw new Error('You must enter an email and password')
+    //Validate inputs
+    if(!email || !password || !first_name || !last_name || !role || password.length < 7 || !reg.test(email)) {
+      res.send({"error": "Invalid"})
     }
-    let duplicateEmails = await User.find({email: email});
-    if(!duplicateEmails.length){
+
+    //Check if a user with new email already exists
+    let duplicateEmails = await User.findOne({email: email}).lean();
+    if(!duplicateEmails){
+
+      //Check if user is a tenant and manager
       var roleField;
       if(role == "Manager"){
         var newManager = new Manager();
         await newManager.save();
-
         roleField = {manager: newManager._id};
       } else {
         var newTenant = new Tenant();
         await newTenant.save();
-
         roleField = {tenant: newTenant._id};
       }
 
@@ -43,12 +47,14 @@ module.exports = {
         last_name: newUser.last_name,
         ...roleField
       }
-      var token = jwt.sign(u, 'this is my secret and nobody elses', {
+
+      //Create authentication token for newly created user
+      var token = jwt.sign(u, secret, {
        expiresIn: 60 * 60 * 24 // expires in 24 hours
       });
       res.send({"token": token});
     } else {
-      res.send({error: "A user with that email already exists."})
+      res.send({"error": "A user with that email already exists."})
     }
 
   },
@@ -67,13 +73,14 @@ module.exports = {
 
   login: async (req, res) => {
 
-    let user = await User.findOne({email: req.body.email})
+    let user = await User.findOne({email: req.body.email}).lean();
 
     if(!user) {
-      res.send({message: 'User not found'});
+      res.send({error: 'Invalid log-in information'});
     } else {
-      let isMatch = await User.comparePassword(req.body.password, user.password);
 
+      //Validate password
+      let isMatch = await User.comparePassword(req.body.password, user.password);
       if(isMatch){
         var roleField = user.manager ? {manager: user.manager} : {tenant: user.tenant};
         var u = {
@@ -82,28 +89,17 @@ module.exports = {
           id: user._id,
           ...roleField
         };
-        var token = jwt.sign(u, 'this is my secret and nobody elses', {
-         expiresIn: 60 * 60 * 24 // expires in 24 hours
+
+        //Valid log-in information so send user token
+        var token = jwt.sign(u, secret, {
+         expiresIn: 60 * 60 * 12 // expires in 12 hours
         });
+
         res.send({ token: token });
       } else {
-        res.send({message: 'Invalid password'});
+        res.send({error: 'Invalid log-in information'});
       }
     }
-  },
-
-  addPhoto: async (req, res) => {
-    upload(req, res, function(error){
-      if(error){
-        console.log(error);
-      }
-      User.update({ _id: req.params.id }, { $set: { img: "https://s3-us-west-2.amazonaws.com/jabberusers/"+req.params.id+".png" }}, (error) => {
-        if(error){
-          console.log(error);
-        }
-        res.send({"message": "Success"});
-      });
-    })
   },
 
   getInfo: async (req, res) => {
@@ -119,14 +115,14 @@ module.exports = {
   },
 
   updateEmail: async (req, res) => {
-    let user = await User.findById(req.params.id);
+    let user = await User.findById(req.params.id).lean();
 
     let isMatch = await User.comparePassword(req.body.password, user.password);
 
     if(isMatch){
-      let duplicateEmails = await User.find({email: req.body.email});
+      let duplicateEmail = await User.findOne({email: req.body.email}).lean();
 
-      if(!duplicateEmails.length){
+      if(!duplicateEmail){
         await User.update({_id: req.params.id}, {email: req.body.email})
 
         res.send({"message": "Success"})

@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import APIManager from 'utils/APIManager.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import Input from 'components/Input/Input.js';
-import Card from 'components/Card/Card.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest, createRequest } from 'utils/APIManager';
+import Subheader from 'components/Subheader/Subheader';
+import Input from 'components/Input/Input';
+import Card from 'components/Card/Card';
+import BorderButton from 'components/BorderButton/BorderButton';
+import FilledButton from 'components/FilledButton/FilledButton';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './LeaseForm.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -38,7 +38,7 @@ class LeaseForm extends React.Component {
     this.validateFields = this.validateFields.bind(this);
   }
   componentDidMount(){
-    APIManager.getById(`/m/lease/form/${this.props.match.params.id}`, (err, response) => {
+    getRequest(`/m/lease/form/${this.props.match.params.id}`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -66,14 +66,15 @@ class LeaseForm extends React.Component {
     if(noErrors){
       let { begins, ends, rent, deposit, hasEndDate } = this.state;
       var endDate = hasEndDate ? ends : null;
-      let body = JSON.stringify({
+      let body = {
         begins: this.state.begins,
         ends: endDate,
         rent: rent,
         deposit: deposit,
         application: this.props.match.params.id
-      });
-      APIManager.create(`/m/lease`, body, (err, response) => {
+      };
+
+      createRequest(`/m/lease`, body, (err, response) => {
         if(err){
           console.log(err);
           return;
@@ -87,15 +88,14 @@ class LeaseForm extends React.Component {
   validateFields(){
     let { rent, deposit, begins, ends, hasEndDate } = this.state;
     const errors = {};
-    errors.rent = !rent ? true : false;
-    errors.deposit = !deposit ? true : false;
+    errors.rent = !rent || isNaN(rent) || rent < 0 ? true : false;
+    errors.deposit = !deposit || isNaN(deposit) || deposit < 0 ? true : false;
     errors.begins = !begins ? true : false;
     errors.ends = (hasEndDate && !ends) ? true : false;
     return errors;
   }
   render(){
     let { loading, address, unit, begins, hasEndDate, ends, rent, deposit, first_name, last_name, errors } = this.state;
-    let label = first_name.charAt(0) + last_name.charAt(0);
     if(!loading){
       return(
         <div>
@@ -121,7 +121,7 @@ class LeaseForm extends React.Component {
           <div className={styles.applicantContainer}>
             <div className={styles.applicants}>
               <h5>Applicants:</h5>
-              <div className={styles.applicant}><div className={styles.avatar}>{label}</div>{first_name} {last_name} </div>
+              <div className={styles.applicant}><div className={styles.avatar}>{first_name.charAt(0)+last_name.charAt(0)}</div>{first_name} {last_name} </div>
             </div>
           </div>
           <div className={styles.leaseContainer}>
@@ -129,8 +129,8 @@ class LeaseForm extends React.Component {
               <form onSubmit={this.handleSubmit} className={styles.padding}>
                 <h4>Lease Info</h4>
                 <div className={styles.rent}>
-                  <Input name="rent" label="rent" value={rent} hasError={errors["rent"]} onChange={this.handleInputChange} />
-                  <Input name="deposit" label="deposit" value={deposit} hasError={errors["deposit"]} onChange={this.handleInputChange} />
+                  <Input name="rent" label="rent" value={rent} hasError={errors.rent} onChange={this.handleInputChange} />
+                  <Input name="deposit" label="deposit" value={deposit} hasError={errors.deposit} onChange={this.handleInputChange} />
                 </div>
                 <label className={styles.radio}>
                   Month-to-month: <span className={styles.faded}>There's no set end date, but you can stop collecting payments at any time</span>
@@ -158,7 +158,7 @@ class LeaseForm extends React.Component {
                       onChange={this.setStartDate}
                       placeholderText="MM/DD/YYYY"
                     />
-                    {errors["begins"] && <div className={styles.error}>You must enter a start date</div>}
+                    {errors.begins && <div className={styles.error}>You must enter a start date</div>}
                   </span>
                   {hasEndDate &&
                     <span>
@@ -168,7 +168,7 @@ class LeaseForm extends React.Component {
                         onChange={this.setEndDate}
                         placeholderText="MM/DD/YYYY"
                       />
-                      {errors["ends"] && <div className={styles.error}>You must enter an end date</div>}
+                      {errors.ends && <div className={styles.error}>You must enter an end date</div>}
                     </span>
                   }
                 </div>

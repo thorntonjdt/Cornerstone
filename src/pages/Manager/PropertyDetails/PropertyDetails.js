@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import APIManager from 'utils/APIManager.js';
 
-import Image from 'components/Image/Image.js';
-import Tabs from 'components/Tabs/Tabs.js';
-import Tab from 'components/Tab/Tab.js';
-import Leases from 'components/Leases/Leases.js';
-import Listings from 'components/Listings/Listings.js';
-import Applications from 'components/Applications/Applications.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import Circle from 'components/Circle/Circle.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest, updateRequest } from 'utils/APIManager';
+import Image from 'components/Image/Image';
+import Tabs from 'components/Tabs/Tabs';
+import Tab from 'components/Tab/Tab';
+import Leases from 'components/Leases/Leases';
+import Listings from 'components/Listings/Listings';
+import Applications from 'components/Applications/Applications';
+import FilledButton from 'components/FilledButton/FilledButton';
+import Circle from 'components/Circle/Circle';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './PropertyDetails.css';
 
@@ -32,7 +32,7 @@ class PropertyDetails extends React.Component {
     this.toggleArchive = this.toggleArchive.bind(this);
   }
   componentDidMount(){
-    APIManager.getById(this.props.location.pathname, (err, response) => {
+    getRequest(this.props.location.pathname, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -46,10 +46,11 @@ class PropertyDetails extends React.Component {
     let appIndex = applications.findIndex((app => app._id == id));
     newArray[appIndex].archived = !archived;
     this.setState({applications: newArray})
-    let body = JSON.stringify({
+    let body = {
       archived: !archived
-    });
-    APIManager.update(`/m/applications/${id}`, body, (err, response) => {
+    };
+
+    updateRequest(`/m/applications/${id}`, body, (err, response) => {
       if(err){
         console.log(err);
         this.setState({applications: applications})

@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Subheader from 'components/Subheader/Subheader';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import Filter from 'components/Filter/Filter.js';
-import LoadList from 'components/LoadList/LoadList.js';
+import FilledButton from 'components/FilledButton/FilledButton';
+import Filter from 'components/Filter/Filter';
+import LoadList from 'components/LoadList/LoadList';
 import PropertyItem from 'components/PropertyItem/PropertyItem';
-import Circle from 'components/Circle/Circle.js';
+import Circle from 'components/Circle/Circle';
 
 import styles from './Properties.css';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
-import APIManager from 'utils/APIManager.js';
+import formatDate from 'utils/DateFormatter';
+import { getRequest } from 'utils/APIManager.js';
 import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
 import Subheader from 'components/Subheader/Subheader.js';
 import BorderButton from 'components/BorderButton/BorderButton.js';
@@ -23,7 +23,7 @@ class TicketDetails extends React.Component {
     this.addComment = this.addComment.bind(this);
   }
   componentDidMount(){
-    APIManager.get(`/t/tickets/${this.props.match.params.id}`, (err, response) => {
+    getRequest(`/t/tickets/${this.props.match.params.id}`, (err, response) => {
       if(err){
         console.log(err);
         return;
@@ -55,6 +55,7 @@ class TicketDetails extends React.Component {
                 <h2>{ticket.title}</h2>
               </div>
             }
+            button={ticket.open ? <span className={styles.open}>Open</span> : <span className={styles.closed}>Closed</span>}
           />
           <div className={styles.leaseContainer}>
             <div className={styles.lease}>

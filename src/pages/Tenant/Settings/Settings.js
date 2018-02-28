@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Tabs from 'components/Tabs/Tabs.js';
-import Tab from 'components/Tab/Tab.js';
-import InfoForm from 'components/InfoForm/InfoForm.js';
-import AccountForm from 'components/AccountForm/AccountForm.js';
+import Tabs from 'components/Tabs/Tabs';
+import Tab from 'components/Tab/Tab';
+import InfoForm from 'components/InfoForm/InfoForm';
+import AccountForm from 'components/AccountForm/AccountForm';
 
 import styles from './Settings.css';
 

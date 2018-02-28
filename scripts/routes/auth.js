@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var user = require('../controllers/user.js');
-var wrapAsync = require('../helpers/wrappers.js').async;
+var user = require('../controllers/user');
+var async = require('../helpers/wrappers').async;
 
-router.post('/login', wrapAsync(user.login));
-router.post('/signup', wrapAsync(user.create));
+router.post('/login', async(user.login));
+router.post('/signup', async(user.create));
 
 module.exports = router;

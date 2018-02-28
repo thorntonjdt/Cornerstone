@@ -91,8 +91,7 @@ module.exports = {
 		new webpack.optimize.UglifyJsPlugin({
 			beautify: false,
 			mangle: {
-				screw_ie8: true,
-				// keep_fnames: true
+				screw_ie8: true
 			},
 			compress: {
 				warnings: false,

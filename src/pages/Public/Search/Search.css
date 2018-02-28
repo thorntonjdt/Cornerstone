@@ -1,18 +1,19 @@
 .container {
-  position: fixed;
-  top: 55px;
-  bottom: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0px;
   left: 0;
   right: 0;
+  overflow: hidden;
 }
 
 .content {
   position: relative;
-  height: 100%;
-  overflow: auto;
+  height: calc(100% - 55px);
+  margin-top: 55px;
 }
 .map {
-  height: 50%;
+  height: 45%;
   position: relative;
 }
 
@@ -24,8 +25,20 @@
 .properties {
   overflow: auto;
   padding: 10px 20px;
+  max-height: 55%;
+  height: 55%;
   box-sizing: border-box;
 }
+
+.noProperties {
+  composes: properties;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
 .input {
   width: 100%;
   display: inline-flex;
@@ -58,8 +71,8 @@
   width: 50%;
   display: flex;
   align-items: center;
-  position: fixed;
-  margin-left: 120px;
+  position: absolute;
+  margin-left: 60px;
   top: 0;
   height: 55px;
 }
@@ -72,8 +85,10 @@
   },
   .searchBar {
     height: 70px;
+    margin-left: 75px;
   },
-  .container {
-    top: 70px;
+  .content {
+    margin-top: 70px;
+    height: calc(100% - 70px);
   }
 }

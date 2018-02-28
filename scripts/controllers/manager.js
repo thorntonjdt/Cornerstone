@@ -1,8 +1,9 @@
-var Manager = require('../models/manager.js');
+var Manager = require('../models/manager');
 
 module.exports = {
   getProperties: async (req, res) => {
-    let manager = await Manager.findById(req.params.id, 'properties').populate('properties', 'address city state img zip').lean();
+    let manager = await Manager.findById(req.params.id, 'properties')
+                                  .populate('properties', 'address city state img zip').lean();
 
     if(!manager){
       throw new Error('Invalid Resource')
@@ -36,7 +37,7 @@ module.exports = {
                             path: 'property',
                             select: 'address'
                           }
-                        });
+                        }).lean();
 
     res.send({"payload": manager.listings});
   },
@@ -58,13 +59,13 @@ module.exports = {
                                           path: 'applicant',
                                           select: 'first_name last_name'
                                         }]
-                                      });
+                                      }).lean();
 
     res.send({"payload": manager.applications});
   },
 
   getNotifications: async (req, res) => {
-    let manager = await Manager.findById(req.params.id).select('notifications');
+    let manager = await Manager.findById(req.params.id).select('notifications').lean();
 
     res.send({payload: manager.notifications});
   },
@@ -76,7 +77,7 @@ module.exports = {
   },
 
   removeNotification: async (req, res) => {
-    await Manager.update({_id: req.params.id}, { $pull: { notifications: { date: req.params.date }}});
+    await Manager.update({_id: req.params.id}, { $pull: { notifications: { date: (+req.params.date) }}});
 
     res.send({"message": "Success"});
   },
@@ -89,27 +90,42 @@ module.exports = {
 
   getTickets: async (req, res) => {
     let manager = await Manager.findById(req.params.id, 'tickets')
-      .populate({
-        path: 'tickets',
-        populate: {
-          path: 'lease',
-          select: 'listing',
-          populate: {
-            path: 'listing',
-            select: 'unit property',
-            populate: {
-              path: 'property',
-              select: 'address'
-            }
-          }
-        }
-      }).lean();
-    console.log(manager.tickets);
+                                .populate({
+                                  path: 'tickets',
+                                  populate: {
+                                    path: 'lease',
+                                    select: 'listing',
+                                    populate: {
+                                      path: 'listing',
+                                      select: 'unit property',
+                                      populate: {
+                                        path: 'property',
+                                        select: 'address'
+                                      }
+                                    }
+                                  }
+                                }).lean();
+
     res.send({"payload": manager.tickets})
   },
 
   getTickets: async (req, res) => {
-    let manager = await Manager.findById(req.params.id).select('tickets lease').populate({path: 'tickets', populate: {path: 'lease', select: 'listing', populate: {path: 'listing', select: 'property unit', populate: {path: 'property', select: 'address'}}}}).lean();
+    let manager = await Manager.findById(req.params.id , 'tickets lease')
+                                .populate({
+                                  path: 'tickets',
+                                  populate: {
+                                    path: 'lease',
+                                    select: 'listing',
+                                    populate: {
+                                      path: 'listing',
+                                      select: 'property unit',
+                                      populate: {
+                                        path: 'property',
+                                        select: 'address'
+                                      }
+                                    }
+                                  }
+                                }).lean();
 
     res.send({"payload": manager.tickets});
   }

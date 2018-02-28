@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import APIManager from 'utils/APIManager.js';
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
-import Tabs from 'components/Tabs/Tabs.js';
-import Tab from 'components/Tab/Tab.js';
-import TenantTransactions from 'components/TenantTransactions/TenantTransactions.js';
-import Circle from 'components/Circle/Circle.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import Rental from 'components/Rental/Rental.js';
+import { getRequest } from 'utils/APIManager';
+import formatDate from 'utils/DateFormatter';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
+import Tabs from 'components/Tabs/Tabs';
+import Tab from 'components/Tab/Tab';
+import TenantTransactions from 'components/TenantTransactions/TenantTransactions';
+import Circle from 'components/Circle/Circle';
+import FilledButton from 'components/FilledButton/FilledButton';
+import Rental from 'components/Rental/Rental';
 
 import styles from './Payments.css';
 
@@ -18,20 +18,31 @@ class Payments extends React.Component {
     super();
     this.state = {
       lease: {},
+      transactions: [],
       loading: true
     }
+    this.addTransaction = this.addTransaction.bind(this);
   }
   componentDidMount(){
-    APIManager.get(`/t/tenants/${this.props.tenant}/leases`, (err, response) => {
+    getRequest(`/t/tenants/${this.props.tenant}/leases`, (err, response) => {
       if(err){
         console.log(err);
         return;
       }
-      this.setState({lease: response, loading: false})
+      this.setState({lease: response, transactions: response.transactions, loading: false})
     })
   }
+  addTransaction(transaction){
+    transaction.date = Date.now();
+    var balance = (+this.state.lease.balance) + (+transaction.amount);
+    var newLease = {...this.state.lease};
+    transaction.balance = balance;
+    newLease.balance = balance;
+    const newTransactions = [...this.state.transactions, transaction];
+    this.setState({transactions: newTransactions, lease: newLease})
+  }
   render(){
-    const { loading, lease } = this.state;
+    const { loading, lease, transactions } = this.state;
     if(loading)
     return(
       <LoadSpinner />
@@ -51,7 +62,7 @@ class Payments extends React.Component {
           <Tabs active={0}>
             <Tab text="Transactions">
               <div className={styles.pagePadding}>
-                <TenantTransactions lease={lease} />
+                <TenantTransactions lease={lease} transactions={transactions} addTransaction={this.addTransaction} />
               </div>
             </Tab>
             <Tab text="Rental Details">

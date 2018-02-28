@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AccountButton from 'components/AccountButton/AccountButton.js';
-import Notifications from 'components/Notifications/Notifications.js';
-import AuthModal from 'components/AuthModal/AuthModal.js';
+import AccountButton from 'components/AccountButton/AccountButton';
+import Notifications from 'components/Notifications/Notifications';
+import AuthModal from 'components/AuthModal/AuthModal';
 
 import styles from './AuthComponent.css';
 

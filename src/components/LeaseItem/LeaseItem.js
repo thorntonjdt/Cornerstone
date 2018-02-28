@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import formatDate from 'utils/DateFormatter/DateFormatter.js';
-import Card from 'components/Card/Card.js';
+import formatDate from 'utils/DateFormatter';
+import Card from 'components/Card/Card';
 
 import styles from './LeaseItem.css';
 

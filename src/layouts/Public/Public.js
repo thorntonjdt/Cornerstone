@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 const AuthComponent = Loadable({
-  loader: () => import('components/AuthComponent/AuthComponent.js'),
+  loader: () => import('components/AuthComponent/AuthComponent'),
   loading: () => null
 })
 

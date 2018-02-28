@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import APIManager from 'utils/APIManager.js';
-import Subheader from 'components/Subheader/Subheader.js';
-import ImageUploader from 'components/ImageUploader/ImageUploader.js';
-import BorderButton from 'components/BorderButton/BorderButton.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
-import LoadSpinner from 'components/LoadSpinner/LoadSpinner.js';
+import { getRequest, uploadImage, updateRequest, deleteRequest } from 'utils/APIManager';
+import Subheader from 'components/Subheader/Subheader';
+import Input from 'components/Input/Input';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
+import BorderButton from 'components/BorderButton/BorderButton';
+import FilledButton from 'components/FilledButton/FilledButton';
+import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
 
 import styles from './PropertyEditForm.css';
 
@@ -21,16 +22,18 @@ class PropertyEditForm extends React.Component {
       state: '',
       zip: '',
       image: null,
-      listing: ''
+      listing: '',
+      errors: ''
     };
     this.toggleEdit = this.toggleEdit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteProperty = this.deleteProperty.bind(this);
+    this.validateFields = this.validateFields.bind(this);
   }
   componentDidMount(){
-    APIManager.getById(`/m/properties/${this.props.match.params.id}/edit`, (err,response) => {
+    getRequest(`/m/properties/${this.props.match.params.id}/edit`, (err,response) => {
       if(err){
         console.log(err);
         return;
@@ -43,7 +46,7 @@ class PropertyEditForm extends React.Component {
     this.setState({editing: !this.state.editing})
   }
   uploadImage(image){
-    APIManager.uploadImage(`/m/properties/${this.props.match.params.id}/picture`, image, (err) => {
+    uploadImage(`/m/properties/${this.props.match.params.id}/picture`, image, (err) => {
       if(err){
         console.log(err);
         return;
@@ -66,31 +69,41 @@ class PropertyEditForm extends React.Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    let { address, city, state, zip } = this.state;
-    let str = address+", "+city+", "+state;
-    let replaced = str.replace(/\s/g, '+');
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${replaced}&key=AIzaSyDLN1zBL_sAjEQwJ2843b1W_B_SlkH1eLs`)
-    .then(response => response.json())
-    .then(({results}) => {
-      let body = JSON.stringify({
-        address: address,
-        city: city,
-        state: state,
-        zip: zip,
-        lat: results[0].geometry.location.lat,
-        lng: results[0].geometry.location.lng
-      });
-      APIManager.update(`/m/properties/${this.props.match.params.id}`, body, (err, response) => {
-        if(err){
-          console.log(err);
+    const errors = this.validateFields();
+    const noErrors = Object.keys(errors).every(i => !errors[i])
+    if(noErrors){
+      let { address, city, state, zip } = this.state;
+      let str = address+", "+city+", "+state;
+      let replaced = str.replace(/\s/g, '+');
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${replaced}&key=AIzaSyDLN1zBL_sAjEQwJ2843b1W_B_SlkH1eLs`)
+      .then(response => response.json())
+      .then(({results, status}) => {
+        if(status != "OK"){
+          this.setState({errors: {form: "Address does not exist."}})
           return;
         }
-        this.setState({editing: false});
-      });
-    });
+        let body = {
+          address: address,
+          city: city,
+          state: state,
+          zip: zip,
+          coords: [results[0].geometry.location.lng, results[0].geometry.location.lat]
+        };
+
+        updateRequest(`/m/properties/${this.props.match.params.id}`, body, (err, response) => {
+          if(err){
+            this.setState({errors: {form: "A property with this address already exists."}})
+            return;
+          }
+          this.setState({editing: false, errors: ''});
+        });
+      })
+    } else {
+        this.setState({errors: errors})
+    }
   }
   deleteProperty(){
-    APIManager.delete(`/m/properties/${this.props.match.params.id}`, (err) => {
+    deleteRequest(`/m/properties/${this.props.match.params.id}`, (err) => {
       if(err){
         console.log(err);
         return;
@@ -98,8 +111,17 @@ class PropertyEditForm extends React.Component {
       this.props.history.push('/m/properties');
     })
 	}
+  validateFields(){
+    let { address, city, state, zip } = this.state;
+    const errors = {};
+    errors.address = !address ? true : false;
+    errors.city = !city ? true : false;
+    errors.state = !state ? true : false;
+    errors.zip = !zip ? true : false;
+    return errors;
+  }
   render() {
-    let { loading, editing, address, city, state, zip, image, listing } = this.state;
+    let { loading, editing, address, city, state, zip, image, listing, errors } = this.state;
     if(loading){
       return(
         <LoadSpinner />
@@ -136,24 +158,13 @@ class PropertyEditForm extends React.Component {
             <div className={styles.editContainer}>
               {editing ?
                 <form onSubmit={this.handleSubmit}>
-                  <div>
-                    <label for='address'>STREET ADDRESS</label>
-                    <input name='address' type='text' value={address} onChange={this.handleInputChange} />
-                  </div>
+                  <Input name="address" label="street address" value={address} hasError={errors.address} onChange={this.handleInputChange} />
                   <div className={styles.row}>
-                    <span>
-                      <label for="city">CITY</label>
-                      <input name='city' type='text' value={city} onChange={this.handleInputChange} />
-                    </span>
-                    <span>
-                      <label for="state">STATE</label>
-                      <input name='state' type='text' value={state} onChange={this.handleInputChange} />
-                    </span>
-                    <span>
-                      <label for="zip">ZIP</label>
-                      <input name='zip' type='text' value={zip} onChange={this.handleInputChange} />
-                    </span>
+                    <Input name="city" label="city" value={city} hasError={errors.city} onChange={this.handleInputChange} />
+                    <Input name="state" label="state" value={state} hasError={errors.state} onChange={this.handleInputChange} />
+                    <Input name="zip" label="zip" value={zip} hasError={errors.zip} onChange={this.handleInputChange} />
                   </div>
+                  {errors.form && <div className={styles.error}>{errors.form}</div>}
                   <button style={{display: 'none'}} type="submit" />
                   <span className={styles.submitBtn}>
                     <FilledButton
@@ -180,11 +191,11 @@ class PropertyEditForm extends React.Component {
                 <span>
                   {listing ?
                     <span className={styles.active}>
-                      Listing
+                      Active Listings
                     </span>
                   :
                     <span className={styles.inactive}>
-                      No Listing
+                      No Active Listings
                     </span>
                   }
                 </span>

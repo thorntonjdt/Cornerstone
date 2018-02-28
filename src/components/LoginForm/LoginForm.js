@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Input from 'components/Input/Input.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import Input from 'components/Input/Input';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './LoginForm.css';
 
@@ -12,7 +12,6 @@ class LoginForm extends React.Component {
       email: '',
       password: '',
       errors: '',
-      error: '',
       processing: false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,8 +36,7 @@ class LoginForm extends React.Component {
       const { email, password } = this.state;
       this.setState({
         processing: true,
-        errors: '',
-        error: ''
+        errors: ''
       })
       fetch('/auth/login', {
         method: "POST",
@@ -57,7 +55,7 @@ class LoginForm extends React.Component {
           this.props.login(token);
         }
         else {
-          this.setState({error: "We didn't recognize that email and password combination.", errors: '', processing: false});
+          this.setState({errors: {form: "We didn't recognize that email and password combination."}, processing: false});
         }
       })
     } else {
@@ -76,12 +74,12 @@ class LoginForm extends React.Component {
     return errors;
   }
   render(){
-    const { email, password, errors, error, processing } = this.state;
+    const { email, password, errors, processing } = this.state;
     return (
       <form className={styles.form} onSubmit={this.handleSubmit}>
-        <Input name="email" label="your email" value={email} hasError={errors["email"]} errorText="Please enter a valid email address." onChange={this.handleInputChange} />
-        <Input password name="password" label="your password" value={password} hasError={errors["password"]} onChange={this.handleInputChange} />
-        {error && <div className={styles.error}>{error}</div>}
+        <Input name="email" label="your email" value={email} hasError={errors.email} errorText="Please enter a valid email address." onChange={this.handleInputChange} />
+        <Input password name="password" label="your password" value={password} hasError={errors.password} onChange={this.handleInputChange} />
+        {errors.form && <div className={styles.error}>{errors.form}</div>}
         <button className={styles.hidden} type="submit" />
         <FilledButton
           width="100%"

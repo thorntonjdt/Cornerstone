@@ -1,11 +1,11 @@
 import React from 'react';
 import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 
-import Image from 'components/Image/Image.js';
+import Image from 'components/Image/Image';
 
-import styles from './MapContainer.css';
+import styles from './SearchMap.css';
 
-export class MapContainer extends React.Component {
+export class SearchMap extends React.Component {
   constructor(){
     super();
     this.state = {
@@ -67,7 +67,7 @@ export class MapContainer extends React.Component {
     return (
         <Map
           google={google}
-          zoom={13}
+          zoom={12}
           containerStyle={style}
           initialCenter={center}
           center={center}
@@ -100,5 +100,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyDLN1zBL_sAjEQwJ2843b1W_B_SlkH1eLs")
-})(MapContainer)
+  apiKey: ("your-google-api-key")
+})(SearchMap)

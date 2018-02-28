@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Subheader from 'components/Subheader/Subheader.js';
-import LoadList from 'components/LoadList/LoadList.js';
-import Filter from 'components/Filter/Filter.js';
-import LeaseItem from 'components/LeaseItem/LeaseItem.js';
-import Circle from 'components/Circle/Circle.js';
-import FilledButton from 'components/FilledButton/FilledButton.js';
+import Subheader from 'components/Subheader/Subheader';
+import LoadList from 'components/LoadList/LoadList';
+import Filter from 'components/Filter/Filter';
+import LeaseItem from 'components/LeaseItem/LeaseItem';
+import Circle from 'components/Circle/Circle';
+import FilledButton from 'components/FilledButton/FilledButton';
 
 import styles from './Payments.css';
 
