@@ -1,16 +1,3 @@
-.image {
-  background-size: cover;
-  background-position: center;
-  height: 170px;
-}
-
-.placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f7f7f7;
-  height: 170px;
-}
 .banner {
   height: 70px;
   display: flex;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Card from 'components/Card/Card';
-
+import Image from 'components/Image/Image';
 import styles from './ImageUploader.css';
 
 const ImageUploader = ({image, uploadImage, placeholder}) => {
@@ -11,15 +11,12 @@ const ImageUploader = ({image, uploadImage, placeholder}) => {
   }
   return(
     <Card>
-      {image ?
-        <div style={{backgroundImage: `url(${image})`}} className={styles.image}>
-
-        </div>
-      :
-        <div className={styles.placeholder}>
-          {placeholder}
-        </div>
-      }
+      <Image
+        image={image}
+        placeholder={placeholder}
+        width="100%"
+        height="170px"
+      />
       <div className={styles.banner}>
         <label className={styles.label}>
           Upload a Cover Image

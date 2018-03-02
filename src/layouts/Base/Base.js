@@ -46,7 +46,7 @@ class Layout extends React.Component {
             </svg>
           }
         </header>
-          <div className={menuVisible ? styles.menu+' '+styles.show : styles.menu}>
+          <div className={menuVisible ? `${styles.menu} ${styles.show}` : styles.menu}>
             <ul className={styles.links}>
               {links.map(link =>
                 <li className={styles.link} onClick={this.closeMenu}>

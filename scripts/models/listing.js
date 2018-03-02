@@ -5,7 +5,7 @@ var ListingSchema = mongoose.Schema({
   bathrooms: { type: Number, required: true},
   rent: { type: Number, required: true},
   deposit: { type: Number, default: 0 },
-  unit: { type: Number, required: true},
+  unit: { type: String, required: true},
   headline: { type: String, required: true},
   description: { type: String, required: true},
   property: {type: mongoose.Schema.ObjectId, ref: 'Property'},

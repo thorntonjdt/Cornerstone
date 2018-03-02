@@ -103,10 +103,10 @@ class ListingForm extends React.Component {
     const errors = {};
     errors.headline = !headline ? true : false;
     errors.description = !description ? true : false;
-    errors.unit = !unit || isNaN(unit) || unit <= 0 ? true : false;
+    errors.unit = !unit ? true : false;
     errors.bedrooms = !bedrooms || isNaN(bedrooms) || bedrooms <= 0 ? true : false;
     errors.bathrooms = !bathrooms || isNaN(bathrooms) || bathrooms <= 0 ? true : false;
-    errors.rent = !rent || isNaN(rent) || rent <= 0 ? true : false;
+    errors.rent = !rent || isNaN(rent) || rent < 0 ? true : false;
     //errors.form = !file ? "A cover image is required" : false;
     return errors;
   }

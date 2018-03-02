@@ -2,3 +2,10 @@
   background-size: cover;
   background-position: center;
 }
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+}

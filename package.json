@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thorntonjdt/orbis.git"
+    "url": "git+https://github.com/jacuuzi/cornerstone.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/thorntonjdt/orbis/issues"
+    "url": "https://github.com/jacuuzi/cornerstone/issues"
   },
-  "homepage": "https://github.com/thorntonjdt/orbis#readme",
+  "homepage": "https://github.com/jacuuzi/cornerstone#readme",
   "devDependencies": {
     "aws-sdk": "^2.141.0",
     "babel-core": "^6.25.0",
