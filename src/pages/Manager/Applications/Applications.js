@@ -5,8 +5,7 @@ import { getRequest, updateRequest } from 'utils/APIManager';
 import Subheader from 'components/Subheader/Subheader';
 import FilledButton from 'components/FilledButton/FilledButton';
 import Filter from 'components/Filter/Filter';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/CardHeader/CardHeader';
+import Table from 'components/Table/Table';
 import ApplicationItem from 'components/ApplicationItem/ApplicationItem';
 import Circle from 'components/Circle/Circle';
 import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
@@ -73,24 +72,23 @@ class Applications extends React.Component {
                 return(
                   <div>
                     {openApplications.length > 0 &&
-                      <Card>
-                        <CardHeader color="#55B475">
-                          <span className={styles.title}>Recent</span>
-                        </CardHeader>
+                      <Table
+                        active
+                        title="Recent"
+                      >
                         {openApplications.map(application =>
                           <ApplicationItem key={application._id} application={application} location={application.listing.property.address} toggleArchive={this.toggleArchive} />
                         )}
-                      </Card>
+                      </Table>
                     }
                     {archivedApplications.length > 0 &&
-                      <Card>
-                        <CardHeader color="#78909C">
-                          <span className={styles.title}>Archived</span>
-                        </CardHeader>
+                      <Table
+                        title="Archived"
+                      >
                         {archivedApplications.map(application =>
                           <ApplicationItem key={application._id} application={application} location={application.listing.property.address} toggleArchive={this.toggleArchive} />
                         )}
-                      </Card>
+                      </Table>
                     }
                   </div>
                 );

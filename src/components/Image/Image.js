@@ -15,7 +15,4 @@ const Image = ({image, height, width, placeholder}) => {
   )
 }
 
-
-);
-
 export default Image;

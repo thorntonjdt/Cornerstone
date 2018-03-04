@@ -4,3 +4,7 @@
   letter-spacing: 0.6px;
   text-transform:uppercase;
 }
+
+.container {
+  margin-bottom: 20px;
+}

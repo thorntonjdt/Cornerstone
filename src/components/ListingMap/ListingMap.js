@@ -1,5 +1,6 @@
 import React from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { googleKey } from 'utils/config';
 
 export class ListingMap extends React.Component {
 render() {
@@ -21,5 +22,5 @@ render() {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("your-google-api-key")
+  apiKey: (googleKey)
 })(ListingMap)

@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import Subheader from 'components/Subheader/Subheader';
 import LoadList from 'components/LoadList/LoadList';
 import FilledButton from 'components/FilledButton/FilledButton';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/CardHeader/CardHeader';
+import Table from 'components/Table/Table';
 import TicketItem from 'components/TicketItem/TicketItem';
 import Circle from 'components/Circle/Circle';
 
@@ -39,28 +38,23 @@ const Maintenance = ({tenant, lease}) => (
               }
             />
             {openTickets.length > 0 &&
-              <div className={styles.padding}>
-                <Card>
-                  <CardHeader color="#55B475">
-                    <span className={styles.title}>Open</span>
-                  </CardHeader>
-                  {openTickets.map(ticket =>
-                    <TicketItem key={ticket._id} ticket={ticket} app="t" />
-                  )}
-                </Card>
-              </div>
+              <Table
+                active
+                title="Open"
+              >
+                {openTickets.map(ticket =>
+                  <TicketItem key={ticket._id} ticket={ticket} app="t" />
+                )}
+              </Table>
             }
             {closedTickets.length > 0 &&
-              <div className={styles.padding}>
-                <Card>
-                  <CardHeader color="#78909C">
-                    <span className={styles.title}>Closed</span>
-                  </CardHeader>
-                  {closedTickets.map(ticket =>
-                    <TicketItem key={ticket._id} ticket={ticket} app="t" />
-                  )}
-                </Card>
-              </div>
+              <Table
+                title="Closed"
+              >
+                {closedTickets.map(ticket =>
+                  <TicketItem key={ticket._id} ticket={ticket} app="t" />
+                )}
+              </Table>
             }
           </div>
         )

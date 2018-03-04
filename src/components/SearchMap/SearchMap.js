@@ -1,5 +1,6 @@
 import React from 'react';
 import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
+import { googleKey } from 'utils/config';
 
 import Image from 'components/Image/Image';
 
@@ -90,7 +91,14 @@ export class SearchMap extends React.Component {
             onClose={this.onInfoWindowClose}
           >
             <div>
-              <Image image={selectedPlace.image} height="75px" width="75px" />
+              <Image
+                image={selectedPlace.image}
+                placeholder={
+                  <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"><path fill="#d3d3d3" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                }
+                height="75px"
+                width="75px"
+              />
               <div className={styles.rent}>${selectedPlace.rent}</div>
             </div>
           </InfoWindow>
@@ -100,5 +108,5 @@ export class SearchMap extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("your-google-api-key")
+  apiKey: (googleKey)
 })(SearchMap)

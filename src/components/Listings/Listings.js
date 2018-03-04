@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 import LoadList from 'components/LoadList/LoadList';
 import Filter from 'components/Filter/Filter';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/CardHeader/CardHeader';
+import Table from 'components/Table/Table';
 import ListingItem from 'components/ListingItem/ListingItem';
 import BorderButton from 'components/BorderButton/BorderButton';
 import FilledButton from 'components/FilledButton/FilledButton';
@@ -34,26 +33,23 @@ const Listings = ({property}) => (
               return(
                 <div>
                   {activeListings.length > 0 &&
-                    <div className={styles.space}>
-                      <Card>
-                        <CardHeader color="#55B475">
-                          <span className={styles.title}>Active Listings</span>
-                        </CardHeader>
-                        {activeListings.map(listing =>
-                          <ListingItem key={listing._id} listing={listing} location={"Unit "+listing.unit} />
-                        )}
-                      </Card>
-                    </div>
+                    <Table
+                      active
+                      title="Active Listings"
+                    >
+                      {activeListings.map(listing =>
+                        <ListingItem key={listing._id} listing={listing} location={"Unit "+listing.unit} />
+                      )}
+                    </Table>
                   }
                   {inactiveListings.length > 0 &&
-                    <Card>
-                      <CardHeader color="#78909C">
-                        <span className={styles.title}>Inactive Listings</span>
-                      </CardHeader>
+                    <Table
+                      title="Inactive Listings"
+                    >
                       {inactiveListings.map(listing =>
                         <ListingItem key={listing._id} listing={listing} location={"Unit "+listing.unit} />
                       )}
-                    </Card>
+                    </Table>
                   }
                   <Link to={{pathname: `/m/listings/new`, state: {propertyId: property}}} className={styles.createBtn}>
                     <BorderButton

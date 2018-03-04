@@ -3,18 +3,6 @@
   margin: 20px 0;
   float: right;
 }
-
-.space {
-  margin-bottom: 25px;
-}
-
-.title {
-  color: white;
-  font-size: 12px;
-  letter-spacing: 0.6px;
-  text-transform:uppercase;
-}
-
 .center {
   display: flex;
   flex-direction: column;

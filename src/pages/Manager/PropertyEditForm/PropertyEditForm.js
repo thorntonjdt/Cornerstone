@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { getRequest, uploadImage, updateRequest, deleteRequest } from 'utils/APIManager';
+import { googleKey } from 'utils/config';
 import Subheader from 'components/Subheader/Subheader';
 import Input from 'components/Input/Input';
 import ImageUploader from 'components/ImageUploader/ImageUploader';
@@ -75,7 +76,7 @@ class PropertyEditForm extends React.Component {
       let { address, city, state, zip } = this.state;
       let str = address+", "+city+", "+state;
       let replaced = str.replace(/\s/g, '+');
-      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${replaced}&key=AIzaSyDLN1zBL_sAjEQwJ2843b1W_B_SlkH1eLs`)
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${replaced}&key=${googleKey}`)
       .then(response => response.json())
       .then(({results, status}) => {
         if(status != "OK"){

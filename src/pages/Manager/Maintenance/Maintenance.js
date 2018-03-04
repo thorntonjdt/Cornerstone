@@ -3,8 +3,7 @@ import React from 'react';
 import Subheader from 'components/Subheader/Subheader';
 import LoadList from 'components/LoadList/LoadList';
 import Filter from 'components/Filter/Filter';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/CardHeader/CardHeader';
+import Table from 'components/Table/Table';
 import TicketItem from 'components/TicketItem/TicketItem';
 import Circle from 'components/Circle/Circle';
 
@@ -34,24 +33,23 @@ const Maintenance = ({manager}) => (
               return(
                 <div>
                   {openTickets.length > 0 &&
-                    <Card>
-                      <CardHeader color="#55B475">
-                        <span className={styles.title}>Open</span>
-                      </CardHeader>
+                    <Table
+                      active
+                      title="Open"
+                    >
                       {openTickets.map(ticket =>
                         <TicketItem key={ticket._id} ticket={ticket} app="m" />
                       )}
-                    </Card>
+                    </Table>
                   }
                   {closedTickets.length > 0 &&
-                    <Card>
-                      <CardHeader color="#78909C">
-                        <span className={styles.title}>Closed</span>
-                      </CardHeader>
-                      {closedTickets.map(ticket =>
+                    <Table
+                      title="Closed"
+                    >
+                      {openTickets.map(ticket =>
                         <TicketItem key={ticket._id} ticket={ticket} app="m" />
                       )}
-                    </Card>
+                    </Table>
                   }
                 </div>
               )

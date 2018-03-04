@@ -41,7 +41,8 @@ module.exports = {
       var firstDay = beginDate.getDate();
       var endOfMonth = new Date(y, m + 1, 0);
       var lastDay = endOfMonth.getDate();
-      var prorated = (firstDay/lastDay) * rent;
+      var daysLeft = lastDay - firstDay;
+      var prorated = (daysLeft/lastDay) * rent;
       var roundedProrated = (Math.round(100*prorated))/100;
       if(m == 11){
         var dueDate = new Date(y + 1, 0, 1);

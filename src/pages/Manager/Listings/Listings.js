@@ -5,8 +5,7 @@ import Subheader from 'components/Subheader/Subheader';
 import LoadList from 'components/LoadList/LoadList';
 import FilledButton from 'components/FilledButton/FilledButton';
 import Filter from 'components/Filter/Filter';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/CardHeader/CardHeader';
+import Table from 'components/Table/Table';
 import ListingItem from 'components/ListingItem/ListingItem';
 import Circle from 'components/Circle/Circle';
 
@@ -49,24 +48,23 @@ const Listings = ({manager}) => (
               return(
                 <div>
                   {activeListings.length > 0 &&
-                    <Card>
-                      <CardHeader color="#55B475">
-                        <span className={styles.title}>Active Listings</span>
-                      </CardHeader>
+                    <Table
+                      active
+                      title="Active Listings"
+                    >
                       {activeListings.map(listing =>
                         <ListingItem key={listing._id} listing={listing} location={listing.property.address} />
                       )}
-                    </Card>
+                    </Table>
                   }
                   {inactiveListings.length > 0 &&
-                    <Card>
-                      <CardHeader color="#78909C">
-                        <span className={styles.title}>Inactive Listings</span>
-                      </CardHeader>
+                    <Table
+                      title="Inactive Listings"
+                    >
                       {inactiveListings.map(listing =>
                         <ListingItem key={listing._id} listing={listing} location={listing.property.address} />
                       )}
-                    </Card>
+                    </Table>
                   }
                 </div>
               )

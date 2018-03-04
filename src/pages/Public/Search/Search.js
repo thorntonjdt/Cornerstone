@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { getRequest } from 'utils/APIManager';
+import { googleKey } from 'utils/config';
 import SearchMap from 'components/SearchMap/SearchMap';
 import ListingCard from 'components/ListingCard/ListingCard';
 import LoadSpinner from 'components/LoadSpinner/LoadSpinner';
@@ -43,7 +44,7 @@ class Search extends React.Component {
     })
   }
   getCoordsThenNearbyListings(location){
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDLN1zBL_sAjEQwJ2843b1W_B_SlkH1eLs`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${googleKey}`)
     .then(response => response.json())
     .then(({results}) => {
       let coords = results[0].geometry.location;
